@@ -1,3 +1,4 @@
 colorama
 termcolor
 art
+python-dotenv==1.0.1
