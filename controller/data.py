@@ -11,7 +11,7 @@ class DataController():
 
     def get_list_type_header(list_type:str)->list[str]:
         if list_type=='accounts' or list_type=='categories':
-            return ['id','name']
+            return ['name']
         elif list_type=='entries':
             return ['id','title','type','amount','date','category','account']
         
@@ -23,7 +23,7 @@ class DataController():
                 writer = csv.DictWriter(file, fieldnames=fields)
                 writer.writeheader()
                 if list_type=='accounts' or list_type=='categories':
-                    writer.writerow({'id': '1', 'name': 'General'})
+                    writer.writerow({'name': 'General'})
             file.close()
             print(f'{file_name} does exist a new one will be generated!')
 

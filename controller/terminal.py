@@ -81,16 +81,16 @@ class TerminalController():
     def main_menu():
         while True:
             TerminalController.clear_screen()
-            menu_choice=input("Please choose an option:\n\n",
+            print("Please choose an option:\n\n",
             "1. Add a New Entry: Users can add a new budget item (income or expense).\n",
             "2. Display Account Balance: Calculate and display the net balance for selected accounts or categories.\n",
             "3. View All Entries: Show all previous budget entries.\n",
             "4. Search Entries: Search for specific entries by title, date, or category.\n",
             "5. Generate Reports: Create financial reports based on custom parameters (ex: date range, category, account).\n",
             "6. Manage Accounts and Categories: Add, edit, or delete accounts and categories.\n",
-            "7. Exit: Safely exit the application.\n\n",
-            "Enter your choice (1-7) : "
+            "7. Exit: Safely exit the application.\n\n"
             )
+            menu_choice=input("Enter your choice (1-7) : ")
             match menu_choice:
                 case "1":
                     TerminalController.add_a_new_entry()
