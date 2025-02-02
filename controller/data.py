@@ -101,9 +101,12 @@ class DataController():
         DataController.accounts.append(entry)
         return entry
     def append_entry_file(entry:Entry):
+        fields=DataController.get_list_type_header('entries')
         file_name=os.path.join(DataController.data_base_dir,'data','entries.csv')
-        with open(file_name, 'r') as file:
-            csv_reader = csv.reader(file)
+        with open(file_name, 'a') as file:
+            writer = csv.DictWriter(file, fieldnames=fields)
+            writer.writerow(entry.__dict__)
+        print(f'{entry} was saved in CSV file successfully')
 
     
     def search_entries_by_category(cat_search:str):
