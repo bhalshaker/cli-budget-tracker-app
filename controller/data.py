@@ -2,12 +2,25 @@ import csv
 import os
 import datetime
 import re
-from model.model import Account,Category,Entry,EntryType
+from model.model import Entry
 
 class DataController():
     accounts=[]
     categories=[]
     entries=[]
+    data_base_dir=None
+
+    def get_next_id(list)->int:
+        next_id=0
+        if len(list)<0:
+            max_id=0
+            for item in list:
+                max_id=max(item.id,max_id)
+            if max_id >= len(list)+1:
+                next_id=max_id+1
+            elif max_id< len(list)+1:
+                next_id=len(list)+1
+        return next_id
 
     def get_list_type_header(list_type:str)->list[str]:
         if list_type=='accounts' or list_type=='categories':
@@ -40,9 +53,9 @@ class DataController():
             for row in csv_reader:
                 match list_type:
                     case 'accounts':
-                        DataController.accounts.append(Account(row[0],row[1]))
+                        DataController.accounts.append(row[0])
                     case 'categories':
-                        DataController.categories.append(Category(row[0],row[1]))
+                        DataController.categories.append(row[0])
                     case 'entries':
                         DataController.entries.append(Entry(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
         file.close()
@@ -76,29 +89,22 @@ class DataController():
         DataController.load_data_from_list_to_csv(data_base_dir,'categories')
         DataController.load_data_from_list_to_csv(data_base_dir,'entries')
 
-    def get_next_id(list)->int:
-        next_id=0
-        if len(list)<0:
-            max_id=0
-            for item in list:
-                max_id=max(item.id,max_id)
-            if max_id >= len(list)+1:
-                next_id=max_id+1
-            elif max_id< len(list)+1:
-                next_id=len(list)+1
-        return next_id
+    def add_a_new_account(name:str)->None:
+        DataController.accounts.append(name)
 
-    def add_a_new_account(name:str):
-        next_id=DataController.get_next_id(DataController.accounts)
-        DataController.accounts.append(Account(next_id,name))
+    def add_a_new_category(name:str)->None:
+        DataController.accounts.append(name)
 
-    def add_a_new_category(name:str):
-        next_id=DataController.get_next_id(DataController.categories)
-        DataController.accounts.append(Category(next_id,name))
-
-    def add_a_new_entry(title:str,type:EntryType,amount:float,date:datetime.date,category:int,account:int):
+    def add_a_new_entry(title:str,type:str,amount:float,date:datetime.date,category:str,account:str)->Entry:
         next_id=DataController.get_next_id(DataController.entries)
-        DataController.accounts.append(Entry(next_id,title,type,amount,date,category,account))
+        entry=Entry(next_id,title,type,amount,date,category,account)
+        DataController.accounts.append(entry)
+        return entry
+    def append_entry_file(entry:Entry):
+        file_name=os.path.join(DataController.data_base_dir,'data','entries.csv')
+        with open(file_name, 'r') as file:
+            csv_reader = csv.reader(file)
+
     
     def search_entries_by_category(cat_search:str):
         cat_matches=[]
