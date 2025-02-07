@@ -76,9 +76,25 @@ class DataController():
         file.close()
         return data_list
 
-    # def load_data_from_files()->None:
-    #     for list_type in [Files.ACCOUNTS.value,Files.CATEGORIES.value,Files.ENTRIES.value]:
-    #         DataController.load_data_from_csv_to_list(list_type)
+    def load_data_from_files()->None:
+        accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
+        categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
+        upper_accounts_list=[item.upper() for item in accounts_list]
+        upper_categories_list=[item.upper() for item in categories_list]
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        update_account_list=False
+        update_category_list=False
+        for entry in entries_list:
+            if entry.account.upper() not in upper_accounts_list:
+                accounts_list.append(entry.account)
+                update_account_list=True
+            if entry.category.upper() not in upper_categories_list:
+                categories_list.append(entry.category)
+                update_category_list=True
+        if update_account_list:
+            DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
+        if update_category_list:
+            DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
     def load_data_from_list_to_csv(data_list,list_type)->None:
         fields=DataController.get_list_type_header(list_type)
@@ -97,13 +113,17 @@ class DataController():
 
     def delete_account(selected_account:str)->None:
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
-        while selected_account in accounts_list:
+        upper_accounts_list=[item.upper() for item in accounts_list]
+        while selected_account.upper() in upper_accounts_list:
             accounts_list.remove(selected_account)
         DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
 
     def delete_category(selected_category:str)->None:
-        while selected_category in DataController.categories:
-            DataController.categories.remove(selected_category)
+        categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
+        upper_categories_list=[item.upper() for item in categories_list]
+        while selected_category.upper() in upper_categories_list:
+            categories_list.remove(selected_category)
+        DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
     def add_a_new_account(name:str)->None:
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
@@ -180,6 +200,14 @@ class DataController():
             if entries_list[item].account.upper()==acc_search.upper():
                 matched_entries_ref.append(item)
             return matched_entries_ref
+        
+    def match_entries_by_title(title_search:str):
+        entries_matches=[]
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        for entry in entries_list:
+            if re.search(f"\b{title_search.upper()}",entry.title.upper()):
+                entries_matches.append(entry)
+        return entries_matches
         
     def match_entries_by_category(cat_search:str):
         matched_entries_ref=[]
