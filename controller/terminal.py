@@ -32,19 +32,16 @@ class TerminalValidationController():
         return True
         
     def validate_type(answers, current):
-
         if current.upper() not in ["I","INCOME","E","EXPENSE"]:
             raise errors.ValidationError('',reason='Please enter a valid budget item type i for income and e for expense')
         
     def validate_account(answer,current):
-        accounts_upper=[account.upper() for account in DataController.accounts]
-        if current.upper() in accounts_upper:
+        if DataController.does_account_exist(current):
             raise errors.ValidationError('',reason='This account already exists')
         return True
     
     def validate_category(answer,current):
-        categories_upper=[category.upper() for category in DataController.categories]
-        if current.upper() in categories_upper:
+        if DataController.does_category_exist(current):
             raise errors.ValidationError('',reason='This category already exists')
         return True
 

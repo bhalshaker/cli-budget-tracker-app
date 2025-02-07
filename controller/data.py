@@ -216,3 +216,18 @@ class DataController():
             if entries_list[item].category.upper()==cat_search.upper():
                 matched_entries_ref.append(item)
             return matched_entries_ref
+    def does_account_exist(account:str)->bool:
+        accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
+        accounts_upper=[account.upper() for account in accounts_list]
+        result=False
+        if account.upper() in accounts_upper:
+            result=True
+        return result
+    
+    def does_category_exist(category:str)->bool:
+        categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
+        categories_upper=[category.upper() for category in categories_list]
+        result=False
+        if category.upper() in categories_upper:
+            result=True
+        return result
