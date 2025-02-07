@@ -199,7 +199,7 @@ class DataController():
         for item in range(len(entries_list)):
             if entries_list[item].account.upper()==acc_search.upper():
                 matched_entries_ref.append(item)
-            return matched_entries_ref
+        return matched_entries_ref
         
     def match_entries_by_title(title_search:str):
         entries_matches=[]
@@ -215,7 +215,7 @@ class DataController():
         for item in range(len(entries_list)):
             if entries_list[item].category.upper()==cat_search.upper():
                 matched_entries_ref.append(item)
-            return matched_entries_ref
+        return matched_entries_ref
     def does_account_exist(account:str)->bool:
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         accounts_upper=[account.upper() for account in accounts_list]
@@ -231,3 +231,7 @@ class DataController():
         if category.upper() in categories_upper:
             result=True
         return result
+    
+    def filter_entries_by_date_range(start_date,end_date):
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        return list(filter(lambda entry: entry.date>=start_date or entry.date<=end_date,entries_list))

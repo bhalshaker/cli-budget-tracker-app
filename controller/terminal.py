@@ -1,9 +1,8 @@
 from colorama import init
 from termcolor import colored
-import art
 import os
 from datetime import datetime
-from controller.data import DataController
+from controller.data import DataController,Files
 import inquirer
 from inquirer import errors
 from inquirer.themes import GreenPassion
@@ -64,6 +63,14 @@ class TerminalController():
             os.system('cls')
         else:
             os.system('clear')
+    
+    def select_an_account(text:str):
+        accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
+        return inquirer.List('account',message=text,choices=accounts_list,default=accounts_list[0])
+
+    def select_a_category(text:str):
+        categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
+        return inquirer.List('category',message=text,choices=categories_list,default=categories_list[0])
 
     def add_a_new_entry():
         print('Enter a new budget entry item')
@@ -72,9 +79,9 @@ class TerminalController():
                     inquirer.Text("type", message="Type of item enter i for income and e for expense", validate=lambda _, type : type.upper() in ["I","E","EXPENSE","INCOME"]),
                     inquirer.Text("amount", message="The monetary value of the item",validate=TerminalValidationController.amount_validation),
                     inquirer.Text("date", message='Date of the transaction in "MM-DD-YYYY" format',validate=TerminalValidationController.validate_date),
-                    inquirer.List("category", message="Select the category of the item", choices=DataController.categories, default=DataController.categories[0]),
-                    inquirer.List("account", message="Select the account of the item", choices=DataController.accounts, default=DataController.accounts[0]),
         ]
+        entry_questions.append(TerminalController.select_a_category("Select the category of the item"))
+        entry_questions.append(TerminalController.select_an_account("Select the account of the item"))
         entry=inquirer.prompt(entry_questions, theme=GreenPassion())
         entry_type='Expense' if entry['type'].upper() in ['E','EXPENSE'] else 'Income' 
         DataController.add_a_new_entry(entry['title'],entry_type,entry['amount'],entry['date'],entry['category'],entry['account'])
@@ -97,18 +104,15 @@ class TerminalController():
         return {'total_incomes':totalIncome,'total_expenses':totalExpenses}
     
     def display_balance_of_all_accounts():
-        DataController.load_data_from_csv_to_list('entries')
-        balance=TerminalController.process_entry_list_balance(DataController.entries)
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        balance=TerminalController.process_entry_list_balance(entries_list)
         TerminalController.print_net_balanace(balance)
 
     def display_specific_account_balance():
-        account_to_display=[
-            inquirer.List('account',message='Select the account you want to display the balance for ',choices=DataController.accounts,default=DataController.accounts[0]),
-        ]
-        selected_account=inquirer.prompt(questions=account_to_display)
-        DataController.load_data_from_csv_to_list('entries')
+        selected_account=inquirer.prompt(questions=[TerminalController.select_an_account('Select the account you want to display the balance for ')])
         entries_of_selected_account=[]
-        for entry in DataController.entries:
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        for entry in entries_list:
             if entry.account==selected_account['account']:
                 entries_of_selected_account.append(entry)
         balance=TerminalController.process_entry_list_balance(entries_of_selected_account)
@@ -133,22 +137,36 @@ class TerminalController():
         ]
         entered_date_range=inquirer.prompt(questions=date_range)
         return entered_date_range
+    
+    def print_entries(entries_to_print):
+        count=1
+        for entry in entries_to_print:
+            print(f'{count}. {entry.print()}')
+
         
     def view_all_entries():
         view_choices=['For a specific account','For a specific category','For a specific date range','For all entries']
         view_entries=inquirer.prompt(questions=[inquirer.List('view_entries',message='How do you want view entrie?',choices=view_choices,default=view_choices[0])])
         match view_entries['view_entries']:
             case 'For a specific account':
-                pass
+                selected_account=inquirer.prompt(questions=[TerminalController.select_an_account('Select the account for which you want to print the entries.')])
+                entries_to_print=DataController.match_entries_by_account(selected_account['account'])
+                print(f'Entries under {selected_account["account"]} account are:')
+                TerminalController.print_entries(entries_to_print)
             case 'For a specific category':
-                pass
+                selected_category=inquirer.prompt(questions=[TerminalController.select_a_category('Select the category for which you want to print the entries.')])
+                entries_to_print=DataController.match_entries_by_category(selected_category['category'])
+                print(f'Entries under {selected_category["category"]} category are:')
+                TerminalController.print_entries(entries_to_print)
             case 'For a specific date range':
-                pass
+                date_range=TerminalController.date_range_input()
+                entries_to_print=DataController.filter_entries_by_date_range(date_range['start_date'],date_range['end_date'])
+                print(f'Entries between {date_range["start_date"]} and {date_range["end_date"]} are :')
+                TerminalController.print_entries(entries_to_print)
             case 'For all entries':
-                pass
-    # Ask if they want to view entries for a specific account, category, or date range, or if they want to view all entries.
-    # Read the relevant .csv file(s) and filter the entries based on the user’s selection.
-    # Display each entry in a clear and readable format, including the title, type, amount, date, category, and account.
+                entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+                print('Here is list of all entries :')
+                TerminalController.print_entries(entries_list)
 
 
     def search_entries():
@@ -190,8 +208,9 @@ class TerminalController():
 
 
     def edit_an_account():
+        accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         account_to_rename=[
-            inquirer.List('account',message='Enter the account you want to edit',choices=DataController.accounts,default=DataController.accounts[0]),
+            inquirer.List('account',message='Enter the account you want to edit',choices=accounts_list,default=accounts_list[0]),
         ]
         selected_account=inquirer.prompt(questions=account_to_rename)
         matched_entries=DataController.match_entries_by_account(selected_account['account'])
@@ -207,18 +226,15 @@ class TerminalController():
             print(f'No entries under {selected_account["account"]} account')
         renamed_account=inquirer.prompt(questions=[inquirer.Text('renamed_account',f'Enter the new name for the account {selected_account["account"]}',validate=TerminalValidationController.validate_account)])
         DataController.rename_account(selected_account["account"],renamed_account['renamed_account'])
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         for item in matched_entries:
-            DataController.entries[item].account=renamed_account['renamed_account']
+            entries_list[item].account=renamed_account['renamed_account']
         print(f'Entries under {selected_account["account"]} was rename to {renamed_account["renamed_account"]} successfully')
         if len(matched_entries)>0:
-            DataController.load_data_from_list_to_csv('entries')
-        DataController.load_data_from_list_to_csv('accounts')
+            DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
 
     def edit_a_category():
-        category_to_rename=[
-            inquirer.List('category',message='Enter the category you want to edit',choices=DataController.categories,default=DataController.categories[0]),
-        ]
-        selected_category=inquirer.prompt(questions=category_to_rename)
+        selected_category=inquirer.prompt(questions=[TerminalController.select_a_category('Enter the category you want to edit')])
         matched_entries=DataController.match_entries_by_category(selected_category['category'])
         if len(matched_entries)>0:
             print(f'There are {len(matched_entries)} matched entries under the {selected_category["category"]} category. Proceeding will rename the category in all of them.')
@@ -232,18 +248,15 @@ class TerminalController():
             print(f'No entries under {selected_category["category"]} category')
         renamed_category=inquirer.prompt(questions=[inquirer.Text('renamed_category',f'Enter the new name for the account {selected_category["category"]}',validate=TerminalValidationController.validate_category)])
         DataController.rename_category(selected_category["account"],renamed_category['renamed_category'])
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         for item in matched_entries:
-            DataController.entries[item].category=renamed_category['renamed_category']
+            entries_list[item].category=renamed_category['renamed_category']
         print(f'Entries under {selected_category["category"]} category was rename to {renamed_category["renamed_category"]} successfully')
         if len(matched_entries)>0:
-            DataController.load_data_from_list_to_csv('entries')
-        DataController.load_data_from_list_to_csv('categories')
+            DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
 
     def delete_an_account():
-        account_to_delete=[
-            inquirer.List('account',message='Enter the account you want to delete',choices=DataController.accounts,default=DataController.accounts[0]),
-        ]
-        selected_account=inquirer.prompt(questions=account_to_delete)
+        selected_account=inquirer.prompt(questions=[TerminalController.select_an_account('Enter the account you want to delete')])
         matched_entries=DataController.match_entries_by_account(selected_account['account'])
         if len(matched_entries)>0:
             print(f'There are {len(matched_entries)} matched entries under the {selected_account["account"]} account. Proceeding will null the account in all of them.')
@@ -264,10 +277,7 @@ class TerminalController():
         DataController.load_data_from_list_to_csv('accounts')
 
     def delete_a_category():
-        category_to_delete=[
-            inquirer.List('category',message='Select the category you want to delete',choices=DataController.categories,default=DataController.categories[0]),
-        ]
-        selected_category=inquirer.prompt(questions=category_to_delete)
+        selected_category=inquirer.prompt(questions=[TerminalController.select_a_category('Select the category you want to delete')])
         matched_entries=DataController.match_entries_by_category(selected_category['category'])
         if len(matched_entries)>0:
             print(f'There are {len(matched_entries)} matched entries under the {selected_category["category"]} category. Proceeding will null the category in all of them.')
@@ -298,7 +308,7 @@ class TerminalController():
         print('Manage the accounts and categories used')
         choices=["Add a New Account or Category", "Edit an Existing Account or Category","Delete an Account or Category"]
         management_choice=[
-            inquirer.List("choice", message="Choose your actions", choices=choices, default=the_choices[0]),
+            inquirer.List("choice", message="Choose your actions", choices=choices, default=choices[0]),
         ]
         choice=inquirer.prompt(questions=management_choice)
         match choice['choice']:
