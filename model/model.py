@@ -12,4 +12,4 @@ class Entry():
     def __str__(self):
         return self.__dict__
     def print(self):
-        return f'[{self.date}] {self.title}: {"-" if self.type=='Expense' else "+"}${self.amount} ({self.type}) - Category: {self.category} - Account: {self.account}'
+        return f'[{self.date}] {self.title}: {"-" if self.type=="Expense" else "+"}${self.amount} ({self.type}) - Category: {self.category} - Account: {self.account}'

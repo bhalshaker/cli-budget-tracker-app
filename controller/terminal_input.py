@@ -1,4 +1,4 @@
-from controller.data import DataController,Files
+from controller.data import DataController,Files,Month
 from controller.terminal_validation import TerminalValidationController
 from inquirer import Confirm,List,Text,prompt,themes
 
@@ -32,16 +32,22 @@ class TerminalInputController():
         entered_date_range=TerminalInputController.input_prompt(date_range)
         return entered_date_range
     
-    def date_input(message_text):
+    def date_input(message_text:str):
         return Text("date", message=message_text,validate=TerminalValidationController.validate_date)
     
-    def title_input(message_text):
+    def from_a_date_prompt(message_text:str):
+        return TerminalInputController.input_prompt([TerminalInputController.date_input(message_text)])
+    
+    def title_input(message_text:str):
         return Text("title", message=message_text,validate=lambda _, title: title)
     
-    def type_input(message_text)->Text:
+    def search_by_title_prompt(message_text:str):
+        return TerminalInputController.input_prompt([TerminalInputController.title_input(message_text)])
+    
+    def type_input(message_text:str)->Text:
         return Text("type", message=message_text, validate=lambda _, type : type.upper() in ["I","E","EXPENSE","INCOME"]),
 
-    def amount_input(message_text):
+    def amount_input(message_text:str):
         Text("amount", message=message_text,validate=TerminalValidationController.amount_validation)
 
     def add_a_new_entry_prompt():
@@ -90,13 +96,13 @@ class TerminalInputController():
     
     def rename_account_prompt(account:str):
         rename_account=[
-            Text('renamed_account',f'Enter the new name for the account {account}',validate=TerminalValidationController.validate_account)
+            Text('renamed_account',message=f'Enter the new name for the account {account}',validate=TerminalValidationController.validate_account)
         ]
         return TerminalInputController.input_prompt(rename_account)
 
-    def rename_category_prompt(category):
+    def rename_category_prompt(category:str):
         rename_category=[
-            Text('renamed_account',f'Enter the new name for the category {category}',validate=TerminalValidationController.validate_category)
+            Text('renamed_account',message=f'Enter the new name for the category {category}',validate=TerminalValidationController.validate_category)
         ]
         return TerminalInputController.input_prompt(rename_category)
     
@@ -107,9 +113,9 @@ class TerminalInputController():
         ]
         return TerminalInputController.input_prompt(management_choice)
     
-    def choose_an_account_or_a_category_prompt(message:str)->str:
+    def choose_an_account_or_a_category_prompt(message_text:str)->str:
         account_or_category=[
-            List('account_or_category',message=message,choices=['account','category'],default='account'),
+            List('account_or_category',message=message_text,choices=['account','category'],default='account'),
         ]
         return TerminalInputController.input_prompt(account_or_category)
     
@@ -124,3 +130,45 @@ class TerminalInputController():
             "7. Exit: Safely exit the application.\n\n"
             )
         return input("Enter your choice (1-7) : ")
+    
+    def generate_reports_prompt():
+        generation_options_list=['A specifit Account','A Specific Category','All Entries']
+        generation_options=[
+            List('generation_options',message='Generate financial report for',choices=generation_options_list,default=generation_options_list[0])
+        ]
+        return TerminalInputController.input_prompt(generation_options)
+    def generate_reports_by_date_range_prompt():
+        date_range_options_list=['Month','Quarter','Year']
+        date_range_options=[
+            List('date_range_options',message='Please choose your prefered date range filter',choices=date_range_options_list,default=date_range_options_list[0])
+        ]
+        return TerminalInputController.input_prompt(date_range_options)
+    
+    def year_input():
+        return Text('year',message='Please enter the year toy want to generate the report for',validation=TerminalValidationController.validate_year)
+    
+    def year_input_prompt():
+        return TerminalInputController.input_prompt([TerminalInputController.year_input()])
+    
+    def month_date_range_prompt():
+        months=[month.name for month in Month]
+        month_range=[
+            List('month',message='Select the month you want to generate the report for',choices=months,default=months[0]),
+            TerminalInputController.year_input(),
+        ]
+        return TerminalInputController.input_prompt(month_range)
+    
+    def quarter_date_range_prompt():
+        quarters=DataController.return_quarters()
+        quarters_list=[quarter for quarter,period in quarters.items()]
+        quarters_range=[
+            List('quarter',message='Select the quarter you want to generate the report for',choices=quarters_list,default=quarters_list[0]),
+            TerminalInputController.year_input,
+        ]
+        return TerminalInputController.input_prompt(quarters_range)
+    
+    def filter_report_by_date_prompt():
+        filter_confirm=[
+            Confirm('filter_report',message='Do you want to filter report by date')
+        ]
+        return TerminalInputController.input_prompt(filter_confirm)

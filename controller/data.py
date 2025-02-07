@@ -10,6 +10,20 @@ class Files(enum.Enum):
     CATEGORIES='categories'
     ENTRIES='entries'
 
+class Month(enum.Enum):
+    JANUARY = '01'
+    FEBRUARY = '02'
+    MARCH = '03'
+    APRIL = '04'
+    MAY = '05'
+    JUNE = '06'
+    JULY = '07'
+    AUGUST = '08'
+    SEPTEMBER = '09'
+    OCTOBER = '10'
+    NOVEMBER = '11'
+    DECEMBER = '12'
+
 class DataController():
     data_base_dir=None
 
@@ -200,6 +214,34 @@ class DataController():
             result=True
         return result
     
-    def filter_entries_by_date_range(start_date,end_date):
-        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        return list(filter(lambda entry: entry.date>=start_date or entry.date<=end_date,entries_list))
+    def convert_string_to_date(string_date:str)->datetime:
+        return datetime.strptime(string_date, '%m-%d-%Y')
+    
+    def filter_entries_by_date_range(start_date,end_date,entries=None):
+        converted_start_date=DataController.convert_string_to_date(start_date)
+        converted_end_date=DataController.convert_string_to_date(end_date)
+        entries_list=entries if entries else DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        return list(filter(lambda entry: entry.date>=converted_start_date or entry.date<=converted_end_date,entries_list))
+    
+    def find_entries_from(from_date,entries_list=None):
+        converted_from_date=DataController.convert_string_to_date(from_date)
+        entries_list_filter=entries_list if entries_list else DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        return [entry for entry in entries_list if entry.date>=converted_from_date]
+    
+    def return_quarters():
+        quarters={'First Quarter (Q1)':{'start_month':Month.JANUARY.value,'end_month':Month.MARCH.value},
+          'Second Quarter (Q2)':{'start_month':Month.APRIL.value,'end_month':Month.JUNE.value},
+          'Third Quarter (Q3)':{'start_month':Month.JULY.value,'end_month':Month.SEPTEMBER.value},
+          'Fourth Quarter (Q4)':{'start_month':Month.OCTOBER.value,'end_month':Month.DECEMBER.value}}
+        return quarters
+    
+    def start_month_to_date(month,year):
+        return f'{month}-01-{year}'
+    
+    def end_month_to_date(month,year):
+        return f'{month}-{"31" if month=='03' or month=='12' else "30"}-{year}'
+    
+    def quarters_to_dates(quarter,year):
+        start_date=DataController.start_month_to_date(quarter['start_month',year])
+        end_date=DataController.start_month_to_date(quarter['end_month',year])
+        return DataController.filter_entries_by_date_range(start_date,end_date)
