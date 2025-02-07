@@ -82,19 +82,12 @@ class DataController():
         upper_accounts_list=[item.upper() for item in accounts_list]
         upper_categories_list=[item.upper() for item in categories_list]
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        update_account_list=False
-        update_category_list=False
-        for entry in entries_list:
-            if entry.account.upper() not in upper_accounts_list:
-                accounts_list.append(entry.account)
-                update_account_list=True
-            if entry.category.upper() not in upper_categories_list:
-                categories_list.append(entry.category)
-                update_category_list=True
-        if update_account_list:
-            DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
-        if update_category_list:
-            DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
+        new_account_list=[entry.account for entry in entries_list if entry.account.upper() not in upper_accounts_list]
+        new_category_list=[entry.category for entry in entries_list if entry.category.upper() not in upper_categories_list]
+        accounts_list.extend(new_account_list)
+        categories_list.extend(new_category_list)
+        DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
+        DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
     def load_data_from_list_to_csv(data_list,list_type)->None:
         fields=DataController.get_list_type_header(list_type)
@@ -153,69 +146,44 @@ class DataController():
 
     def rename_account(orginal_account:str,renamed_account:str):
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
-        for item in range(len(accounts_list)):
-            if accounts_list[item].upper()==orginal_account.upper():
-                accounts_list[item]=renamed_account
-        DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
+        accounts_modified_list=[renamed_account if account.upper()==orginal_account.upper() else account for account in accounts_list]
+        DataController.load_data_from_list_to_csv(accounts_modified_list,Files.ACCOUNTS.value)
     
     def rename_category(orginal_category:str,renamed_category:str):
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
-        for item in range(len(categories_list)):
-            if categories_list[item].upper()==orginal_category.upper():
-                categories_list[item]=renamed_category
-        DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
+        modified_categorties_list=[renamed_category if category.upper()==orginal_category.upper() else category for category in categories_list]
+        DataController.load_data_from_list_to_csv(modified_categorties_list,Files.CATEGORIES.value)
             
     def search_entries_by_category(cat_search:str):
-        cat_matches=[]
         entries_matches=[]
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
-        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        for category in categories_list:
-            if re.search(f"\b{cat_search.upper()}",category.name.upper()):
-                cat_matches.append(category)
+        cat_matches=list(filter(lambda category: re.search(f"\b{cat_search.upper()}",category.name.upper()),categories_list))
         if len(cat_matches)>0:
-            for entry in entries_list:
-                if entry.category in cat_matches:
-                    entries_matches.append(entry)
+            entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+            entries_matches=list(filter(lambda entry: entry.category in cat_matches,entries_list))
         return entries_matches
 
     def search_entries_by_account(acc_search:str):
-        acc_matches=[]
         entries_matches=[]
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
-        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        for account in accounts_list:
-            if re.search(f"\b{acc_search.upper()}",account.name.upper()):
-                acc_matches.append(account)
+        acc_matches=list(filter(lambda account: re.search(f"\b{acc_search.upper()}",account.name.upper()),accounts_list))
         if len(acc_matches)>0:
-            for entry in entries_list:
-                if entry.account in acc_matches:
-                    entries_matches.append(entry)
+            entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+            entries_matches=list(filter(lambda entry: entry.account in acc_matches,entries_list))
         return entries_matches
     
     def match_entries_by_account(acc_search:str):
-        matched_entries_ref=[]
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        for item in range(len(entries_list)):
-            if entries_list[item].account.upper()==acc_search.upper():
-                matched_entries_ref.append(item)
-        return matched_entries_ref
+        return list(filter(lambda entry:entry.account.upper()==acc_search.upper(),entries_list))
         
     def match_entries_by_title(title_search:str):
-        entries_matches=[]
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        for entry in entries_list:
-            if re.search(f"\b{title_search.upper()}",entry.title.upper()):
-                entries_matches.append(entry)
-        return entries_matches
+        return list(filter(lambda entry: re.search(f"\b{title_search.upper()}",entry.title.upper()),entries_list))
         
     def match_entries_by_category(cat_search:str):
-        matched_entries_ref=[]
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        for item in range(len(entries_list)):
-            if entries_list[item].category.upper()==cat_search.upper():
-                matched_entries_ref.append(item)
-        return matched_entries_ref
+        return list(filter(lambda entry:entry.category.upper()==cat_search.upper(),entries_list))
+    
     def does_account_exist(account:str)->bool:
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         accounts_upper=[account.upper() for account in accounts_list]
