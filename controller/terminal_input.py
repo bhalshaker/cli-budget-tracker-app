@@ -132,7 +132,7 @@ class TerminalInputController():
         return input("Enter your choice (1-7) : ")
     
     def generate_reports_prompt():
-        generation_options_list=['A specifit Account','A Specific Category','All Entries']
+        generation_options_list=['A Specific Account','A Specific Category','All Entries']
         generation_options=[
             List('generation_options',message='Generate financial report for',choices=generation_options_list,default=generation_options_list[0])
         ]

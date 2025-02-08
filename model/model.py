@@ -1,15 +1,15 @@
 import datetime
 
 class Entry():
-    def __init__(self,id:int,title:str,type:str,amount:float,date:datetime.date,category:str,account:str):
-        self.id=id
+    def __init__(self,id:int,title:str,type:str,amount:float,date:datetime.datetime,category:str,account:str):
+        self.id=int(id)
         self.title=title
         self.type=type
-        self.amount=amount
-        self.date=date
+        self.amount=float(amount)
+        self.date=datetime.datetime.strptime(date, '%m-%d-%Y')
         self.category=category
         self.account=account
     def __str__(self):
         return self.__dict__
     def print(self):
-        return f'[{self.date}] {self.title}: {"-" if self.type=="Expense" else "+"}${self.amount} ({self.type}) - Category: {self.category} - Account: {self.account}'
+        return f'[{self.date.strftime("%m-%d-%Y")}] {self.title}: {"-" if self.type=="Expense" else "+"}${self.amount} ({self.type}) - Category: {self.category} - Account: {self.account}'

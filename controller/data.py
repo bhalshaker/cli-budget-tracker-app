@@ -72,7 +72,7 @@ class DataController():
                 if list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value:
                     list.append(row[0])
                 elif list_type==Files.ENTRIES.value:
-                    list.append(Entry(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+                    list.append(Entry(int(row[0]),row[1],row[2],float(row[3]),DataController.convert_string_to_date(row[4]),row[5],row[6]))
         file.close()
         return list
 
@@ -111,7 +111,7 @@ class DataController():
             writer.writeheader()
             if list_type==Files.ACCOUNTS.value or Files.CATEGORIES.value:
                 for item in data_list:
-                    writer.writerow(item)
+                    writer.writerow({'name':item})
             elif list_type==Files.ENTRIES.value:
                 for item in data_list:
                     writer.writerow(item.__dict__)
@@ -215,7 +215,7 @@ class DataController():
         return result
     
     def convert_string_to_date(string_date:str)->datetime:
-        return datetime.strptime(string_date, '%m-%d-%Y')
+        return datetime.datetime.strptime(string_date, '%m-%d-%Y')
     
     def filter_entries_by_date_range(start_date,end_date,entries=None):
         converted_start_date=DataController.convert_string_to_date(start_date)
@@ -239,7 +239,7 @@ class DataController():
         return f'{month}-01-{year}'
     
     def end_month_to_date(month,year):
-        return f'{month}-{"31" if month=='03' or month=='12' else "30"}-{year}'
+        return f'{month}-{"31" if month=="03" or month=="12" else "30"}-{year}'
     
     def quarters_to_dates(quarter,year):
         start_date=DataController.start_month_to_date(quarter['start_month',year])
