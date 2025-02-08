@@ -6,8 +6,14 @@ import pyfiglet
 from controller.terminal_input import TerminalInputController
 
 class TerminalController():
+    """
+    This class contains methods for the terminal interface.
+    """
 
     def print_welcome_screen():
+        """
+        This method prints the welcome screen of the application.
+        """
         init()
         applicaiton_name=pyfiglet.figlet_format('Budget Tracker App',font='linux')
         version="0.1"
@@ -19,12 +25,18 @@ class TerminalController():
         print(colored(describtion,'light_magenta'))
 
     def clear_screen():
+        """
+        This method clears the terminal screen.
+        """
         if os.name=="nt":
             os.system('cls')
         else:
             os.system('clear')
 
     def add_a_new_entry():
+        """
+        This method adds a new entry to the budget tracker.
+        """
         print('Enter a new budget entry item')
         entry=TerminalInputController.add_a_new_entry_prompt()
         entry_type='Expense' if entry["type"].upper() in ["E','EXPENSE"] else 'Income' 
@@ -32,18 +44,27 @@ class TerminalController():
         print(f'You have successfully added a new Entry ! {entry}')
 
     def print_net_balanace(balance,account=None):
+        """
+        This method prints the net balance of the budget.
+        """
         if account:
            print(f'Net Balanace for {account}: ${balance["net_balance"]}')  
         else:
            print(f'Net Balanace for all entries: ${balance["net_balance"]}') 
 
     def print_financial_report(balance):
+        """
+        This method prints the financial report of the budget.
+        """
         print(f'Total Income: ${round(balance["total_incomes"],3)}')
         print(f'Total Expenses: ${round(balance["total_expenses"],3)}')
         print(f'Net Balance: ${round(balance["net_balance"],3)}')
         print(f'Status : {"Break-even" if balance["net_balance"]==0 else "Profit" if balance["net_balance"]>0 else "Loss"}\n')
 
     def process_entry_list_balance(selected_entry_list):
+        """
+        This method processes the balance of the budget.
+        """
         totalExpenses=0.0
         totalIncome=0.0
         for entry in selected_entry_list:
@@ -54,11 +75,17 @@ class TerminalController():
         return {'total_incomes':totalIncome,'total_expenses':totalExpenses,'net_balance':totalIncome-totalExpenses}
     
     def display_balance_of_all_accounts():
+        """
+        This method displays the balance of all accounts.
+        """
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         balance=TerminalController.process_entry_list_balance(entries_list)
         TerminalController.print_net_balanace(balance)
 
     def display_specific_account_balance():
+        """
+        This method displays the balance of a specific account.
+        """
         selected_account=TerminalInputController.select_an_account_prompt('Select the account you want to display the balance for')
         entries_of_selected_account=[]
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
@@ -70,6 +97,9 @@ class TerminalController():
 
     
     def display_account_balance():
+        """
+        This method displays the balance of the account.
+        """
         display_account_balance=TerminalInputController.display_account_balance_prompt()
         match display_account_balance["display_account_balance"]:
             case 'All Accounts':
@@ -78,12 +108,18 @@ class TerminalController():
                 TerminalController.display_specific_account_balance()
     
     def print_entries(entries_to_print):
+        """
+        This method prints the entries.
+        """
         count=1
         for entry in entries_to_print:
             print(f'{count}. {entry.print()}')
             count+=1
 
     def view_all_entries():
+        """
+        This method views all entries.
+        """
         view_entries=TerminalInputController.view_entries_prompt()
         match view_entries["view_entries"]:
             case 'For a specific account':
@@ -107,6 +143,9 @@ class TerminalController():
                 TerminalController.print_entries(entries_list)
 
     def search_entries():
+        """
+        This method searches the entries.
+        """
         view_entries=TerminalInputController.search_entries_prompt()
         match view_entries["view_entries"]:
             case 'by title':
@@ -131,7 +170,9 @@ class TerminalController():
                 TerminalController.print_entries(entries_to_print)
 
     def generate_reports():
-        ["A specifit Account','A Specific Category','All Entries"]
+        """
+        This method generates financial reports.
+        """
         generate_reports_menu=TerminalInputController.generate_reports_prompt()
         report_for=None
         date_print=None
@@ -172,17 +213,25 @@ class TerminalController():
         balance=TerminalController.process_entry_list_balance(report_entries_list)
         TerminalController.print_financial_report(balance)
 
-
     def add_a_new_account():
+        """
+        This method adds a new account.
+        """
         account=TerminalInputController.add_a_new_account_prompt()
         DataController.add_a_new_account(account["account"])
         
     def add_a_new_category():
+        """
+        This method adds a new category.
+        """
         category=TerminalInputController.add_a_new_category_prompt()
         DataController.add_a_new_account(category["category"])
 
 
     def edit_an_account():
+        """
+        This method edits an account.
+        """
         selected_account=TerminalInputController.select_an_account_prompt('Select the account you want to edit')
         matched_entries=DataController.match_entries_by_account(selected_account["account"])
         if len(matched_entries)>0:
@@ -202,6 +251,9 @@ class TerminalController():
             DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
 
     def edit_a_category():
+        """
+        This method edits a category.
+        """
         selected_category=TerminalInputController.select_a_category_prompt('Enter the category you want to edit')
         matched_entries=DataController.match_entries_by_category(selected_category["category"])
         if len(matched_entries)>0:
@@ -220,6 +272,9 @@ class TerminalController():
             DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
 
     def delete_an_account():
+        """
+        This method deletes an account.
+        """
         selected_account=TerminalInputController.select_an_account_prompt('Enter the account you want to delete')
         matched_entries=DataController.match_entries_by_account(selected_account["account"])
         if len(matched_entries)>0:
@@ -238,6 +293,9 @@ class TerminalController():
         DataController.load_data_from_list_to_csv('accounts')
 
     def delete_a_category():
+        """
+        This method deletes a category.
+        """
         selected_category=TerminalInputController.select_a_category_prompt('Select the category you want to delete')
         matched_entries=DataController.match_entries_by_category(selected_category["category"])
         if len(matched_entries)>0:
@@ -256,6 +314,9 @@ class TerminalController():
         DataController.load_data_from_list_to_csv('categories')
 
     def manage_accounts_and_categories():
+        """
+        This method manages the accounts and categories.
+        """
         print('Manage the accounts and categories used')
         choice=TerminalInputController.manage_accounts_and_categories_prompt()
         match choice["choice"]:
@@ -282,6 +343,9 @@ class TerminalController():
                         TerminalController.delete_a_category()
 
     def main_menu():
+        """
+        This method displays the main menu.
+        """
         while True:
             menu_choice=TerminalInputController.main_menu_prompt()
             match menu_choice:
