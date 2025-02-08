@@ -145,7 +145,7 @@ class TerminalInputController():
         return TerminalInputController.input_prompt(date_range_options)
     
     def year_input():
-        return Text('year',message='Please enter the year toy want to generate the report for',validation=TerminalValidationController.validate_year)
+        return Text('year',message='Please enter the year you want to generate the report for',validate=TerminalValidationController.validate_year)
     
     def year_input_prompt():
         return TerminalInputController.input_prompt([TerminalInputController.year_input()])

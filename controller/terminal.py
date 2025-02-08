@@ -38,10 +38,10 @@ class TerminalController():
            print(f'Net Balanace for all entries: ${balance["net_balance"]}') 
 
     def print_financial_report(balance):
-        print(f'Total Income: ${balance["total_incomes"]}')
-        print(f'Total Expenses: ${balance["total_expenses"]}')
-        print(f'Net Balance: ${balance["net_balance"]}')
-        print(f'Status : {"Break-even" if balance["net_balance"]==0 else "Profit" if balance["net_balance"]>0 else "Loss"}')
+        print(f'Total Income: ${round(balance["total_incomes"],3)}')
+        print(f'Total Expenses: ${round(balance["total_expenses"],3)}')
+        print(f'Net Balance: ${round(balance["net_balance"],3)}')
+        print(f'Status : {"Break-even" if balance["net_balance"]==0 else "Profit" if balance["net_balance"]>0 else "Loss"}\n')
 
     def process_entry_list_balance(selected_entry_list):
         totalExpenses=0.0
@@ -147,16 +147,15 @@ class TerminalController():
                 selected_category=TerminalInputController.select_a_category_prompt('Select the category you want to generate the report for')
                 entries_list=DataController.match_entries_by_category(selected_category["category"])
                 report_for=selected_category["category"]
-            #Do you want to filter reports by date if yes ask for date_range month, quarter, year
         filter_by_date=TerminalInputController.filter_report_by_date_prompt()
         if filter_by_date["filter_report"]:
             filter_date_method=TerminalInputController.generate_reports_by_date_range_prompt()
             match filter_date_method["date_range_options"]:
                 case 'Month':
                     month_filter=TerminalInputController.month_date_range_prompt()
-                    from_date=DataController.start_month_to_date(month_filter["month"],month_filter["year"])
+                    from_date=DataController.start_month_to_date(Month[month_filter["month"]].value,month_filter["year"])
                     report_entries_list=DataController.find_entries_from(from_date,entries_list)
-                    date_print=f'{Month(month_filter["month"].name)} {month_filter["year"]}'
+                    date_print=f'{month_filter["month"]} {month_filter["year"]}'
                 case 'Quarter':
                     quarter_filter=TerminalInputController.quarter_date_range_prompt()
                     date_range=DataController.quarters_to_dates(quarter_filter["quarter"],quarter_filter["year"])
@@ -164,12 +163,12 @@ class TerminalController():
                     date_print=f'{date_range["start_date"]} to {date_range["end_date"]}'
                 case 'Year':
                     year=TerminalInputController.year_input_prompt()
-                    from_date=DataController.start_month_to_date(Month(1).value,year["year"])
+                    from_date=DataController.start_month_to_date(Month('01').value,year["year"])
                     report_entries_list=DataController.find_entries_from(from_date,entries_list)
-                    date_print=f'{month_filter["year"]}'
+                    date_print=f'{year["year"]}'
         else:
             report_entries_list=entries_list
-        print(f'Report for {report_for} ({date_print if date_print else ""})')
+        print(f'\nReport for {report_for} ({date_print if date_print else ""})')
         balance=TerminalController.process_entry_list_balance(report_entries_list)
         TerminalController.print_financial_report(balance)
 

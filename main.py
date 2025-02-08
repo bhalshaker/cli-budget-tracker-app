@@ -14,6 +14,5 @@ def main():
     data.DataController.load_data_from_files()
     terminal.TerminalController.print_welcome_screen()
     terminal.TerminalController.main_menu()
-    data.DataController.save_data_to_files()
 if __name__=="__main__":
     main()

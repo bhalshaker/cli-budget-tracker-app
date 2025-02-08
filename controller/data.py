@@ -96,8 +96,10 @@ class DataController():
         upper_accounts_list=[item.upper() for item in accounts_list]
         upper_categories_list=[item.upper() for item in categories_list]
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        new_account_list=[entry.account for entry in entries_list if entry.account.upper() not in upper_accounts_list]
-        new_category_list=[entry.category for entry in entries_list if entry.category.upper() not in upper_categories_list]
+        new_account_list=list(set([entry.account for entry in entries_list if entry.account.upper() not in upper_accounts_list]))
+        new_category_list=list(set([entry.category for entry in entries_list if entry.category.upper() not in upper_categories_list]))
+        print(new_account_list)
+        print(new_category_list)
         accounts_list.extend(new_account_list)
         categories_list.extend(new_category_list)
         DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)

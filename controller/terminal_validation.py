@@ -1,4 +1,3 @@
-import datetime
 import re
 from inquirer import errors
 from controller.data import DataController
