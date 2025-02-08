@@ -27,20 +27,12 @@ The CLI Budget Tracker Application is a command-line interface tool designed to 
     ```
 
 ## Technologies Used
-- **Python**: The main programming language used for the application.
+- **Python3.11+**: The main programming language used for the application.
 - **colorama**: For colored terminal text.
 - **termcolor**: For additional text coloring options.
-- **art**: For ASCII art generation.
 - **python-dotenv**: For managing environment variables.
 - **inquirer**: For interactive command-line prompts.
-- **yaspin**: For terminal spinners.
 - **pyfiglet**: For generating ASCII text banners.
-- **tabulate2**: For creating formatted tables.
 
 ## Attributes
-- **Accounts**: Manage multiple accounts such as checking, savings, and credit cards.
-- **Categories**: Categorize transactions into predefined or custom categories.
-- **Entries**: Add, view, search, and delete income and expense entries.
-- **Reports**: Generate financial reports based on custom parameters like date range, category, and account.
-- **Validation**: Ensure data integrity with input validation for dates, amounts, and other fields.
-- **Interactive CLI**: User-friendly command-line interface with prompts and menus.
+Does not apply
