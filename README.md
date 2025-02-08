@@ -15,7 +15,7 @@ The CLI Budget Tracker Application is a command-line interface tool designed to 
     pip install -r requirements.txt
     ```
 
-3. **Set up environment variables:**
+3. **Set up environment variables (Optional otherwise base_directory/data is the default location):**
     Create a [.env] file in the root directory and add the following:
     ```env
     BUDG_DATA_PATH=<path-to-data-directory>
