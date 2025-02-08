@@ -6,11 +6,13 @@ import enum
 from model.model import Entry
 
 class Files(enum.Enum):
+    """Enum for different file types."""
     ACCOUNTS='accounts'
     CATEGORIES='categories'
     ENTRIES='entries'
 
 class Month(enum.Enum):
+    """Enum for months."""
     JANUARY = '01'
     FEBRUARY = '02'
     MARCH = '03'
@@ -25,9 +27,11 @@ class Month(enum.Enum):
     DECEMBER = '12'
 
 class DataController():
+    """Controller class for handling data operations."""
     data_base_dir=None
 
     def get_next_id(list)->int:
+        """Get the next ID for a new entry in the list."""
         next_id=0
         if len(list)<0:
             max_id=0
@@ -40,12 +44,14 @@ class DataController():
         return next_id
 
     def get_list_type_header(list_type:str)->list[str]:
+        """Get the header for the CSV file based on the list type."""
         if list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value:
             return ['name']
         elif list_type==Files.ENTRIES.value:
             return ['id','title','type','amount','date','category','account']
         
     def create_csv_if_not_created(data_base_dir:str,list_type:str)->None:
+        """Create a CSV file if it does not already exist."""
         fields=DataController.get_list_type_header(list_type)
         file_name=os.path.join(data_base_dir,'data',f'{list_type}.csv')
         if not os.path.exists(file_name):
@@ -58,25 +64,13 @@ class DataController():
             print(f'{file_name} does exist a new one will be generated!')
 
     def create_all_none_created_csv()->None:
+        """Create all necessary CSV files if they do not already exist."""
         DataController.create_csv_if_not_created(DataController.data_base_dir,Files.ACCOUNTS.value)
         DataController.create_csv_if_not_created(DataController.data_base_dir,Files.CATEGORIES.value)
         DataController.create_csv_if_not_created(DataController.data_base_dir,Files.ENTRIES.value)
 
-    def lookup_from_csv_to_list(list_type:str)->list:
-        file_name=os.path.join(DataController.data_base_dir,'data',f'{list_type}.csv')
-        list=[]
-        with open(file_name, 'r') as file:
-            csv_reader = csv.reader(file)
-            next(csv_reader)
-            for row in csv_reader:
-                if list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value:
-                    list.append(row[0])
-                elif list_type==Files.ENTRIES.value:
-                    list.append(Entry(int(row[0]),row[1],row[2],float(row[3]),DataController.convert_string_to_date(row[4]),row[5],row[6]))
-        file.close()
-        return list
-
     def load_data_from_csv_to_list(list_type:str)->None:
+        """Load data from a CSV file into a list."""
         file_name=os.path.join(DataController.data_base_dir,'data',f'{list_type}.csv')
         data_list=[]
         with open(file_name, 'r') as file:
@@ -91,6 +85,7 @@ class DataController():
         return data_list
 
     def load_data_from_files()->None:
+        """Load data from CSV files."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
         upper_accounts_list=[item.upper() for item in accounts_list]
@@ -106,6 +101,7 @@ class DataController():
         DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
     def load_data_from_list_to_csv(data_list,list_type)->None:
+        """Load data from a list into a CSV file."""
         fields=DataController.get_list_type_header(list_type)
         file_name=os.path.join(DataController.data_base_dir,'data',f'{list_type}.csv')
         with open(file_name, 'w') as file:
@@ -121,6 +117,7 @@ class DataController():
         print(f'{list_type} is saved at {file_name}')
 
     def delete_account(selected_account:str)->None:
+        """Delete an account from the accounts list."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         upper_accounts_list=[item.upper() for item in accounts_list]
         while selected_account.upper() in upper_accounts_list:
@@ -128,6 +125,7 @@ class DataController():
         DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
 
     def delete_category(selected_category:str)->None:
+        """Delete a category from the categories list."""
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
         upper_categories_list=[item.upper() for item in categories_list]
         while selected_category.upper() in upper_categories_list:
@@ -135,17 +133,20 @@ class DataController():
         DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
     def add_a_new_account(name:str)->None:
+        """Add a new account to the accounts list."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         accounts_list.append(name)
         DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
 
     def add_a_new_category(name:str)->None:
+        """Add a new category to the categories list."""
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
         categories_list.append(name)
         DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
 
     def add_a_new_entry(title:str,type:str,amount:float,date:datetime.date,category:str,account:str)->Entry:
+        """Add a new entry to the entries list."""
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         next_id=DataController.get_next_id(entries_list)
         entry=Entry(next_id,title,type,amount,date,category,account)
@@ -153,6 +154,7 @@ class DataController():
         return entry
     
     def append_entry_file(entry:Entry):
+        """Append a new entry to the entries CSV file."""
         fields=DataController.get_list_type_header(Files.ENTRIES.value)
         file_name=os.path.join(DataController.data_base_dir,'data',f'{Files.ENTRIES.value}.csv')
         with open(file_name, 'a') as file:
@@ -161,16 +163,19 @@ class DataController():
         print(f'{entry} was saved in CSV file successfully')
 
     def rename_account(orginal_account:str,renamed_account:str):
+        """Rename an account in the accounts list."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         accounts_modified_list=[renamed_account if account.upper()==orginal_account.upper() else account for account in accounts_list]
         DataController.load_data_from_list_to_csv(accounts_modified_list,Files.ACCOUNTS.value)
     
     def rename_category(orginal_category:str,renamed_category:str):
+        """Rename a category in the categories list."""
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
         modified_categorties_list=[renamed_category if category.upper()==orginal_category.upper() else category for category in categories_list]
         DataController.load_data_from_list_to_csv(modified_categorties_list,Files.CATEGORIES.value)
             
     def search_entries_by_category(cat_search:str):
+        """Search for entries by category."""
         entries_matches=[]
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
         cat_matches=list(filter(lambda category: re.search(f"\b{cat_search.upper()}",category.name.upper()),categories_list))
@@ -180,6 +185,7 @@ class DataController():
         return entries_matches
 
     def search_entries_by_account(acc_search:str):
+        """Search for entries by account."""
         entries_matches=[]
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         acc_matches=list(filter(lambda account: re.search(f"\b{acc_search.upper()}",account.name.upper()),accounts_list))
@@ -189,18 +195,22 @@ class DataController():
         return entries_matches
     
     def match_entries_by_account(acc_search:str):
+        """Match entries by account."""
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         return list(filter(lambda entry:entry.account.upper()==acc_search.upper(),entries_list))
         
     def match_entries_by_title(title_search:str):
+        """Match entries by title.""" 
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         return list(filter(lambda entry: re.search(f"\b{title_search.upper()}",entry.title.upper()),entries_list))
         
     def match_entries_by_category(cat_search:str):
+        """Match entries by category."""
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         return list(filter(lambda entry:entry.category.upper()==cat_search.upper(),entries_list))
     
     def does_account_exist(account:str)->bool:
+        """Check if an account exists."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
         accounts_upper=[account.upper() for account in accounts_list]
         result=False
@@ -209,6 +219,7 @@ class DataController():
         return result
     
     def does_category_exist(category:str)->bool:
+        """Check if a category exists."""
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
         categories_upper=[category.upper() for category in categories_list]
         result=False
@@ -217,20 +228,24 @@ class DataController():
         return result
     
     def convert_string_to_date(string_date:str)->datetime:
+        """Convert a string to a date object."""
         return datetime.datetime.strptime(string_date, '%m-%d-%Y')
     
     def filter_entries_by_date_range(start_date,end_date,entries=None):
+        """Filter entries by a date range."""
         converted_start_date=DataController.convert_string_to_date(start_date)
         converted_end_date=DataController.convert_string_to_date(end_date)
         entries_list=entries if entries else DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         return list(filter(lambda entry: entry.date>=converted_start_date or entry.date<=converted_end_date,entries_list))
     
     def find_entries_from(from_date,entries_list=None):
+        """Find entries from a specific date."""
         converted_from_date=DataController.convert_string_to_date(from_date)
-        entries_list_filter=entries_list if entries_list else DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        return [entry for entry in entries_list if entry.date>=converted_from_date]
+        entries_list_filted=entries_list if entries_list else DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        return [entry for entry in entries_list_filted if entry.date>=converted_from_date]
     
     def return_quarters():
+        """Return a dictionary of quarters."""
         quarters={'First Quarter (Q1)':{'start_month':Month.JANUARY.value,'end_month':Month.MARCH.value},
           'Second Quarter (Q2)':{'start_month':Month.APRIL.value,'end_month':Month.JUNE.value},
           'Third Quarter (Q3)':{'start_month':Month.JULY.value,'end_month':Month.SEPTEMBER.value},
@@ -238,12 +253,15 @@ class DataController():
         return quarters
     
     def start_month_to_date(month,year):
+        """Convert a start month to a date string."""
         return f'{month}-01-{year}'
     
     def end_month_to_date(month,year):
+        """Convert an end month to a date string."""
         return f'{month}-{"31" if month=="03" or month=="12" else "30"}-{year}'
     
     def quarters_to_dates(quarter,year):
+        """Convert a quarter to start and end dates."""
         start_date=DataController.start_month_to_date(quarter['start_month',year])
         end_date=DataController.start_month_to_date(quarter['end_month',year])
         return DataController.filter_entries_by_date_range(start_date,end_date)
