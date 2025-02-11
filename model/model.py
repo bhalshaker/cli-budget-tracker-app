@@ -2,7 +2,7 @@ import datetime
 
 class Entry():
 
-    def __init__(self,id:int,title:str,type:str,amount:float,date:datetime.datetime,category:str,account:str):
+    def __init__(self,id:int,title:str,type:str,amount:float,date:str,category:str,account:str):
         self.id=int(id)
         self.title=title
         self.type=type

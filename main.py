@@ -27,6 +27,7 @@ def main():
     logger.info('configured data and logging location of directories')
     DataController.create_all_none_created_csv()
     DataController.load_data_from_files()
+    time.sleep(2)
     TerminalController.main_menu()
     logger.info('Exited budget application tracker safely ...')
 if __name__=="__main__":

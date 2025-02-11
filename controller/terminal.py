@@ -1,6 +1,8 @@
 from colorama import init
 from termcolor import colored
 import os
+import sys
+#import pyautogui
 from controller.data import DataController,Files,Month
 import pyfiglet
 from controller.terminal_input import TerminalInputController
@@ -33,6 +35,26 @@ class TerminalController():
         else:
             os.system('clear')
     
+    def any_key_to_continue():
+        """This function waits for the user to press any key to continue"""
+        input("Press any key to continue !")
+        if os.name=="nt":
+            import msvcrt
+            return msvcrt.getch()
+        else:
+            import tty, termios
+            fd = sys.stdin.fileno()
+            old_settings = termios.tcgetattr(fd)
+            try:
+                tty.setraw(sys.stdin.fileno())
+                ch = sys.stdin.read(1)
+            finally:
+                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+        #pyautogui.press('enter')
+
+
+    
     def set_termina_size_to_recommended():
         columns=os.get_terminal_size['columns'] if os.get_terminal_size['columns']>=80 else 80
         lines=os.get_terminal_size['lines'] if os.get_terminal_size['lines'] >=24 else 24
@@ -42,21 +64,25 @@ class TerminalController():
         """
         This method adds a new entry to the budget tracker.
         """
+        TerminalController.clear_screen()
         print('Enter a new budget entry item')
         entry=TerminalInputController.add_a_new_entry_prompt()
         print(entry)
         entry_type='Expense' if entry["type"].upper() in ['E','EXPENSE'] else 'Income' 
         DataController.add_a_new_entry(entry["title"],entry_type,entry["amount"],entry["date"],entry["category"],entry["account"])
         print(f'You have successfully added a new Entry ! {entry}')
+        TerminalController.any_key_to_continue()
 
     def print_net_balanace(balance,account=None):
         """
         This method prints the net balance of the budget.
         """
         if account:
-           print(f'Net Balanace for {account}: ${balance["net_balance"]}')  
+           print(colored(f'Net Balanace for {account}: ${round(balance["net_balance"],3)}','red'))  
         else:
-           print(f'Net Balanace for all entries: ${balance["net_balance"]}') 
+           print(colored(f'Net Balanace for all entries: ${round(balance["net_balance"],3)}','red'))
+        TerminalController.any_key_to_continue()
+
 
     def print_financial_report(balance):
         """
@@ -106,6 +132,7 @@ class TerminalController():
         """
         This method displays the balance of the account.
         """
+        TerminalController.any_key_to_continue()
         display_account_balance=TerminalInputController.display_account_balance_prompt()
         match display_account_balance["display_account_balance"]:
             case 'All Accounts':
@@ -126,6 +153,7 @@ class TerminalController():
         """
         This method views all entries.
         """
+        TerminalController.any_key_to_continue()
         view_entries=TerminalInputController.view_entries_prompt()
         match view_entries["view_entries"]:
             case 'For a specific account':
@@ -152,6 +180,7 @@ class TerminalController():
         """
         This method searches the entries.
         """
+        TerminalController.any_key_to_continue()
         view_entries=TerminalInputController.search_entries_prompt()
         match view_entries["view_entries"]:
             case 'by title':
@@ -179,6 +208,7 @@ class TerminalController():
         """
         This method generates financial reports.
         """
+        TerminalController.any_key_to_continue()
         generate_reports_menu=TerminalInputController.generate_reports_prompt()
         report_for=None
         date_print=None
@@ -323,6 +353,7 @@ class TerminalController():
         """
         This method manages the accounts and categories.
         """
+        TerminalController.any_key_to_continue()
         print('Manage the accounts and categories used')
         choice=TerminalInputController.manage_accounts_and_categories_prompt()
         match choice["choice"]:
@@ -352,6 +383,7 @@ class TerminalController():
         """
         This method displays the main menu.
         """
+        TerminalController.clear_screen()
         while True:
             menu_choice=TerminalInputController.main_menu_prompt()
             match menu_choice:
