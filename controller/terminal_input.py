@@ -1,9 +1,12 @@
 from controller.data import DataController,Files,Month
 from controller.terminal_validation import TerminalValidationController
 from inquirer import Confirm,List,Text,prompt,themes
+import logging
 
 class TerminalInputController():
     """Controller class for handling terminal input operations."""
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
 
     def input_prompt(questions_list,theme=None):
         """
@@ -17,7 +20,7 @@ class TerminalInputController():
             dict: User's responses to the questions.
         """
         if theme:
-            prompt(questions_list, theme=theme)
+            return prompt(questions_list, theme=theme)
         else:
             return prompt(questions=questions_list)
 
@@ -143,7 +146,7 @@ class TerminalInputController():
         Returns:
             Text: Text prompt for entering a type.
         """
-        return Text("type", message=message_text, validate=lambda _, type : type.upper() in ["I","E","EXPENSE","INCOME"]),
+        return Text("type", message=message_text, validate=lambda _, type : type.upper() in ["I","E","EXPENSE","INCOME"])
 
     def amount_input(message_text:str):
         """

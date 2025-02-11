@@ -32,6 +32,11 @@ class TerminalController():
             os.system('cls')
         else:
             os.system('clear')
+    
+    def set_termina_size_to_recommended():
+        columns=os.get_terminal_size['columns'] if os.get_terminal_size['columns']>=80 else 80
+        lines=os.get_terminal_size['lines'] if os.get_terminal_size['lines'] >=24 else 24
+        os.set_termina
 
     def add_a_new_entry():
         """
@@ -39,7 +44,8 @@ class TerminalController():
         """
         print('Enter a new budget entry item')
         entry=TerminalInputController.add_a_new_entry_prompt()
-        entry_type='Expense' if entry["type"].upper() in ["E','EXPENSE"] else 'Income' 
+        print(entry)
+        entry_type='Expense' if entry["type"].upper() in ['E','EXPENSE'] else 'Income' 
         DataController.add_a_new_entry(entry["title"],entry_type,entry["amount"],entry["date"],entry["category"],entry["account"])
         print(f'You have successfully added a new Entry ! {entry}')
 

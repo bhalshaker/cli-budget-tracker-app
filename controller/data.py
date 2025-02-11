@@ -3,6 +3,7 @@ import os
 import datetime
 import re
 import enum
+import logging
 from model.model import Entry
 
 class Files(enum.Enum):
@@ -29,18 +30,16 @@ class Month(enum.Enum):
 class DataController():
     """Controller class for handling data operations."""
     data_base_dir=None
+    logger = logging.getLogger(__name__)
 
     def get_next_id(list)->int:
         """Get the next ID for a new entry in the list."""
         next_id=0
-        if len(list)<0:
+        if len(list)>0:
             max_id=0
             for item in list:
                 max_id=max(item.id,max_id)
-            if max_id >= len(list)+1:
-                next_id=max_id+1
-            elif max_id< len(list)+1:
-                next_id=len(list)+1
+            next_id=(max_id+1) if max_id >= len(list)+1 else len(list)+1
         return next_id
 
     def get_list_type_header(list_type:str)->list[str]:
@@ -53,15 +52,16 @@ class DataController():
     def create_csv_if_not_created(data_base_dir:str,list_type:str)->None:
         """Create a CSV file if it does not already exist."""
         fields=DataController.get_list_type_header(list_type)
-        file_name=os.path.join(data_base_dir,'data',f'{list_type}.csv')
+        file_name=os.path.join(data_base_dir,f'{list_type}.csv')
         if not os.path.exists(file_name):
             with open(file_name, "w") as file:
+                file.seek(0)
                 writer = csv.DictWriter(file, fieldnames=fields)
                 writer.writeheader()
                 if list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value:
                     writer.writerow({'name': 'General'})
             file.close()
-            print(f'{file_name} does exist a new one will be generated!')
+            DataController.logger.info(f'{file_name} did not exist a new one was generated!')
 
     def create_all_none_created_csv()->None:
         """Create all necessary CSV files if they do not already exist."""
@@ -71,16 +71,17 @@ class DataController():
 
     def load_data_from_csv_to_list(list_type:str)->None:
         """Load data from a CSV file into a list."""
-        file_name=os.path.join(DataController.data_base_dir,'data',f'{list_type}.csv')
+        file_name=os.path.join(DataController.data_base_dir,f'{list_type}.csv')
         data_list=[]
         with open(file_name, 'r') as file:
+            file.seek(0)
             csv_reader = csv.reader(file)
             next(csv_reader)
             for row in csv_reader:
                 if list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value:
                     data_list.append(row[0])
                 elif list_type==Files.ENTRIES.value:
-                    data_list.append(Entry(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
+                     data_list.append(Entry(row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
         file.close()
         return data_list
 
@@ -93,18 +94,19 @@ class DataController():
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         new_account_list=list(set([entry.account for entry in entries_list if entry.account.upper() not in upper_accounts_list]))
         new_category_list=list(set([entry.category for entry in entries_list if entry.category.upper() not in upper_categories_list]))
-        print(new_account_list)
-        print(new_category_list)
         accounts_list.extend(new_account_list)
         categories_list.extend(new_category_list)
-        DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
-        DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
+        if len(new_account_list)>0:
+            DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
+        if len(new_category_list)>0:
+            DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
     def load_data_from_list_to_csv(data_list,list_type)->None:
         """Load data from a list into a CSV file."""
         fields=DataController.get_list_type_header(list_type)
-        file_name=os.path.join(DataController.data_base_dir,'data',f'{list_type}.csv')
+        file_name=os.path.join(DataController.data_base_dir,f'{list_type}.csv')
         with open(file_name, 'w') as file:
+            file.seek(0)
             writer = csv.DictWriter(file, fieldnames=fields)
             writer.writeheader()
             if list_type==Files.ACCOUNTS.value or Files.CATEGORIES.value:
@@ -112,9 +114,9 @@ class DataController():
                     writer.writerow({'name':item})
             elif list_type==Files.ENTRIES.value:
                 for item in data_list:
-                    writer.writerow(item.__dict__)
+                    writer.writerow(item.append_file_dictionary())
         file.close()
-        print(f'{list_type} is saved at {file_name}')
+        DataController.logger.info(f'{list_type} is saved at {file_name}')
 
     def delete_account(selected_account:str)->None:
         """Delete an account from the accounts list."""
@@ -156,11 +158,11 @@ class DataController():
     def append_entry_file(entry:Entry):
         """Append a new entry to the entries CSV file."""
         fields=DataController.get_list_type_header(Files.ENTRIES.value)
-        file_name=os.path.join(DataController.data_base_dir,'data',f'{Files.ENTRIES.value}.csv')
+        file_name=os.path.join(DataController.data_base_dir,f'{Files.ENTRIES.value}.csv')
         with open(file_name, 'a') as file:
             writer = csv.DictWriter(file, fieldnames=fields)
-            writer.writerow(entry.__dict__)
-        print(f'{entry} was saved in CSV file successfully')
+            writer.writerow(entry.append_file_dictionary())
+        DataController.logger.info(f'{entry.__dict__} was saved in CSV file successfully')
 
     def rename_account(orginal_account:str,renamed_account:str):
         """Rename an account in the accounts list."""
