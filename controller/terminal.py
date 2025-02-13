@@ -2,7 +2,6 @@ from colorama import init
 from termcolor import colored
 import os
 import sys
-#import pyautogui
 from controller.data import DataController,Files,Month
 import pyfiglet
 from controller.terminal_input import TerminalInputController
@@ -51,7 +50,6 @@ class TerminalController():
             finally:
                 termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
-        #pyautogui.press('enter')
 
 
     
