@@ -32,7 +32,7 @@ class TerminalValidationController():
         if TerminalValidationController.validate_date(answers, current):
             start_date = DataController.convert_string_to_date(answers['start_date'])
             end_date = DataController.convert_string_to_date(current)
-            if end_date >= start_date:
+            if end_date <= start_date:
                 raise errors.ValidationError('', reason='End date must be after or equal to start date')
         return True
         

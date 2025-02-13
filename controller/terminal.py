@@ -17,7 +17,7 @@ class TerminalController():
         This method prints the welcome screen of the application.
         """
         init()
-        applicaiton_name=pyfiglet.figlet_format('Budget Tracker App',font='linux')
+        applicaiton_name=pyfiglet.figlet_format('Budget Tracker App',font='small')
         version="0.1"
         describtion='Welcome to budger tracker app, your comprehensive budget tracking application to help mange your small\nbusiness manage finances across multiple accounts, categories, and time periods.'
         print(colored('+'*110, 'green'))
@@ -37,7 +37,7 @@ class TerminalController():
     
     def any_key_to_continue():
         """This function waits for the user to press any key to continue"""
-        input("Press any key to continue !")
+        print(colored("Press any key to continue !",'blue'))
         if os.name=="nt":
             import msvcrt
             return msvcrt.getch()
@@ -92,6 +92,7 @@ class TerminalController():
         print(f'Total Expenses: ${round(balance["total_expenses"],3)}')
         print(f'Net Balance: ${round(balance["net_balance"],3)}')
         print(f'Status : {"Break-even" if balance["net_balance"]==0 else "Profit" if balance["net_balance"]>0 else "Loss"}\n')
+        TerminalController.any_key_to_continue()
 
     def process_entry_list_balance(selected_entry_list):
         """
@@ -132,7 +133,7 @@ class TerminalController():
         """
         This method displays the balance of the account.
         """
-        TerminalController.any_key_to_continue()
+        TerminalController.clear_screen()
         display_account_balance=TerminalInputController.display_account_balance_prompt()
         match display_account_balance["display_account_balance"]:
             case 'All Accounts':
@@ -148,12 +149,13 @@ class TerminalController():
         for entry in entries_to_print:
             print(f'{count}. {entry.print()}')
             count+=1
+        TerminalController.any_key_to_continue()
 
     def view_all_entries():
         """
         This method views all entries.
         """
-        TerminalController.any_key_to_continue()
+        TerminalController.clear_screen()
         view_entries=TerminalInputController.view_entries_prompt()
         match view_entries["view_entries"]:
             case 'For a specific account':
@@ -180,7 +182,7 @@ class TerminalController():
         """
         This method searches the entries.
         """
-        TerminalController.any_key_to_continue()
+        TerminalController.clear_screen()
         view_entries=TerminalInputController.search_entries_prompt()
         match view_entries["view_entries"]:
             case 'by title':
@@ -189,7 +191,7 @@ class TerminalController():
                 print(f'Seatch Results for entries matching "{title["title"]}" title:')
                 TerminalController.print_entries(entries_to_print)
             case 'from a specific date':
-                date=TerminalInputController.from_a_date_prompt('Enter the desired start date to list entries from')
+                date=TerminalInputController.from_a_date_prompt('Enter the desired start date to list entries from in "MM-DD-YYYY format"')
                 entries_to_print=DataController.find_entries_from(date["date"])
                 print(f'Seatch Results for entries from "{date["date"]}":')
                 TerminalController.print_entries(entries_to_print)
@@ -208,7 +210,7 @@ class TerminalController():
         """
         This method generates financial reports.
         """
-        TerminalController.any_key_to_continue()
+        TerminalController.clear_screen()
         generate_reports_menu=TerminalInputController.generate_reports_prompt()
         report_for=None
         date_print=None
@@ -285,6 +287,7 @@ class TerminalController():
         print(f'Entries under {selected_account["account"]} was rename to {renamed_account["renamed_account"]} successfully')
         if len(matched_entries)>0:
             DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
+        TerminalController.any_key_to_continue()
 
     def edit_a_category():
         """
@@ -306,6 +309,7 @@ class TerminalController():
         print(f'Entries under {selected_category["category"]} category was rename to {renamed_category["renamed_category"]} successfully')
         if len(matched_entries)>0:
             DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
+        TerminalController.any_key_to_continue()
 
     def delete_an_account():
         """
@@ -327,6 +331,7 @@ class TerminalController():
         if len(matched_entries)>0:
             DataController.load_data_from_list_to_csv('entries')
         DataController.load_data_from_list_to_csv('accounts')
+        TerminalController.any_key_to_continue()
 
     def delete_a_category():
         """
@@ -348,12 +353,13 @@ class TerminalController():
         if len(matched_entries)>0:
             DataController.load_data_from_list_to_csv('entries')
         DataController.load_data_from_list_to_csv('categories')
+        TerminalController.any_key_to_continue()
 
     def manage_accounts_and_categories():
         """
         This method manages the accounts and categories.
         """
-        TerminalController.any_key_to_continue()
+        TerminalController.clear_screen()
         print('Manage the accounts and categories used')
         choice=TerminalInputController.manage_accounts_and_categories_prompt()
         match choice["choice"]:
@@ -383,8 +389,12 @@ class TerminalController():
         """
         This method displays the main menu.
         """
-        TerminalController.clear_screen()
+        error_message=None
         while True:
+            TerminalController.clear_screen()
+            if error_message:
+                print(error_message)
+                error_message=None
             menu_choice=TerminalInputController.main_menu_prompt()
             match menu_choice:
                 case "1":
@@ -402,4 +412,4 @@ class TerminalController():
                 case "7":
                     break
                 case _:
-                    print("Please enter a valid input 1,2,3,4,5,6 or 7.")
+                    error_message="Please enter a valid input 1,2,3,4,5,6 or 7."

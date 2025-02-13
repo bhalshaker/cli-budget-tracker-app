@@ -204,7 +204,7 @@ class DataController():
     def match_entries_by_title(title_search:str):
         """Match entries by title.""" 
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        return list(filter(lambda entry: re.search(f"\b{title_search.upper()}",entry.title.upper()),entries_list))
+        return list(filter(lambda entry: re.search(f"{title_search.upper()}*",entry.title.upper()),entries_list))
         
     def match_entries_by_category(cat_search:str):
         """Match entries by category."""
@@ -238,7 +238,7 @@ class DataController():
         converted_start_date=DataController.convert_string_to_date(start_date)
         converted_end_date=DataController.convert_string_to_date(end_date)
         entries_list=entries if entries else DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        return list(filter(lambda entry: entry.date>=converted_start_date or entry.date<=converted_end_date,entries_list))
+        return list(filter(lambda entry: entry.date>=converted_start_date and entry.date<=converted_end_date,entries_list))
     
     def find_entries_from(from_date,entries_list=None):
         """Find entries from a specific date."""

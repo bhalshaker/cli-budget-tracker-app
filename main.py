@@ -21,7 +21,8 @@ def main():
     This is the main method of the program.
     """
     logger=initiliaze_env()
-    logger.info('Bedget Application Tracker was just started ...')
+    logger.info('Bedget Tracker Application just started ...')
+    TerminalController.clear_screen()
     TerminalController.print_welcome_screen()
     logger=initiliaze_env()
     logger.info('configured data and logging location of directories')
