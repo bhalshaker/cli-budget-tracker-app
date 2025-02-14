@@ -22,10 +22,9 @@ def main():
     """
     logger=initiliaze_env()
     logger.info('Bedget Tracker Application just started ...')
+    logger.info('configured data and logging location of directories')
     TerminalController.clear_screen()
     TerminalController.print_welcome_screen()
-    logger=initiliaze_env()
-    logger.info('configured data and logging location of directories')
     DataController.create_all_none_created_csv()
     DataController.load_data_from_files()
     time.sleep(2)

@@ -54,12 +54,15 @@ class DataController():
         fields=DataController.get_list_type_header(list_type)
         file_name=os.path.join(data_base_dir,f'{list_type}.csv')
         if not os.path.exists(file_name):
-            with open(file_name, "w") as file:
-                file.seek(0)
+            DataController.logger.info(f'No CSV file for {list_type}')
+            with open(file_name, "w", newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=fields)
+                DataController.logger.info(f'creating {file_name} header(s) {fields} for {list_type} ')
                 writer.writeheader()
-                if list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value:
+                DataController.logger.info(f'Is list type accounts for categories {(list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value)}')
+                if (list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value):
                     writer.writerow({'name': 'General'})
+                    DataController.logger.info(f'Initializing list with default values')
             file.close()
             DataController.logger.info(f'{file_name} did not exist a new one was generated!')
 
@@ -88,14 +91,19 @@ class DataController():
     def load_data_from_files()->None:
         """Load data from CSV files."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
+        DataController.logger.info(f'Account list was loaded with length {len(accounts_list)}')
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
+        DataController.logger.info(f'Categories list was loaded with length {len(categories_list)}')
         upper_accounts_list=[item.upper() for item in accounts_list]
         upper_categories_list=[item.upper() for item in categories_list]
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         new_account_list=list(set([entry.account for entry in entries_list if entry.account.upper() not in upper_accounts_list]))
+        DataController.logger.info(f'# of account in entries but not in accounts list {len(new_account_list)}')
         new_category_list=list(set([entry.category for entry in entries_list if entry.category.upper() not in upper_categories_list]))
+        DataController.logger.info(f'# of categories in entries but not in categories list {len(new_category_list)}')
         accounts_list.extend(new_account_list)
         categories_list.extend(new_category_list)
+        DataController.logger.info(f'New categoris list{categories_list}')
         if len(new_account_list)>0:
             DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
         if len(new_category_list)>0:
@@ -110,7 +118,7 @@ class DataController():
             file.seek(0)
             writer = csv.DictWriter(file, fieldnames=fields)
             writer.writeheader()
-            if list_type==(Files.ACCOUNTS.value or Files.CATEGORIES.value):
+            if (list_type==Files.ACCOUNTS.value or list_type==Files.CATEGORIES.value):
                 for item in data_list:
                     writer.writerow({'name':item})
             elif list_type==Files.ENTRIES.value:
