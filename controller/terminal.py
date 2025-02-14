@@ -238,9 +238,8 @@ class TerminalController():
                     date_print=f'{month_filter["month"]} {month_filter["year"]}'
                 case 'Quarter':
                     quarter_filter=TerminalInputController.quarter_date_range_prompt()
-                    date_range=DataController.quarters_to_dates(quarter_filter["quarter"],quarter_filter["year"])
-                    report_entries_list=DataController.filter_entries_by_date_range(date_range["start_date"],date_range["end_date"],entries_list)
-                    date_print=f'{date_range["start_date"]} to {date_range["end_date"]}'
+                    report_entries_list=DataController.quarters_to_dates(quarter_filter["quarter"],quarter_filter["year"])
+                    date_print=f'{quarter_filter["quarter"]} {quarter_filter["year"]}'
                 case 'Year':
                     year=TerminalInputController.year_input_prompt()
                     from_date=DataController.start_month_to_date(Month('01').value,year["year"])
