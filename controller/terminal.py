@@ -279,12 +279,8 @@ class TerminalController():
             print(f'No entries under {selected_account["account"]} account')
         renamed_account=TerminalInputController.rename_account_prompt(selected_account["account"])
         DataController.rename_account(selected_account["account"],renamed_account["renamed_account"])
-        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        for item in matched_entries:
-            entries_list[item].account=renamed_account["renamed_account"]
+        DataController.rename_entries_account(selected_account["account"],renamed_account["renamed_account"])
         print(f'Entries under {selected_account["account"]} was rename to {renamed_account["renamed_account"]} successfully')
-        if len(matched_entries)>0:
-            DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
         TerminalController.any_key_to_continue()
 
     def edit_a_category():
@@ -300,14 +296,9 @@ class TerminalController():
         else:
             print(f'No entries under {selected_category["category"]} category')
         renamed_category=TerminalInputController.rename_category_prompt(selected_category["category"])
-        DataController.rename_category(selected_category["account"],renamed_category["renamed_category"])
-        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        for item in matched_entries:
-            entries_list[item].category=renamed_category["renamed_category"]
+        DataController.rename_category(selected_category["category"],renamed_category["renamed_category"])
+        DataController.rename_entries_category(selected_category["category"],renamed_category["renamed_category"])
         print(f'Entries under {selected_category["category"]} category was rename to {renamed_category["renamed_category"]} successfully')
-        if len(matched_entries)>0:
-            DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
-        TerminalController.any_key_to_continue()
 
     def delete_an_account():
         """
