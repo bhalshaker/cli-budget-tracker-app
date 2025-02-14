@@ -168,6 +168,7 @@ class DataController():
         fields=DataController.get_list_type_header(Files.ENTRIES.value)
         file_name=os.path.join(DataController.data_base_dir,f'{Files.ENTRIES.value}.csv')
         with open(file_name, 'a') as file:
+            file.seek(0)
             writer = csv.DictWriter(file, fieldnames=fields)
             writer.writerow(entry.append_file_dictionary())
         DataController.logger.info(f'{entry.__dict__} was saved in CSV file successfully')
