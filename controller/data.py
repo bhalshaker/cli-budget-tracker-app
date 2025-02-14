@@ -160,18 +160,9 @@ class DataController():
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
         next_id=DataController.get_next_id(entries_list)
         entry=Entry(next_id,title,type,amount,date,category,account)
-        DataController.append_entry_file(entry)
+        entries_list.append(entry)
+        DataController.load_data_from_list_to_csv(entries_list,Files.ENTRIES.value)
         return entry
-    
-    def append_entry_file(entry:Entry):
-        """Append a new entry to the entries CSV file."""
-        fields=DataController.get_list_type_header(Files.ENTRIES.value)
-        file_name=os.path.join(DataController.data_base_dir,f'{Files.ENTRIES.value}.csv')
-        with open(file_name, 'a') as file:
-            file.seek(0)
-            writer = csv.DictWriter(file, fieldnames=fields)
-            writer.writerow(entry.append_file_dictionary())
-        DataController.logger.info(f'{entry.__dict__} was saved in CSV file successfully')
 
     def rename_account(orginal_account:str,renamed_account:str):
         """Rename an account in the accounts list."""

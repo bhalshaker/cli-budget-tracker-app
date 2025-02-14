@@ -1,7 +1,7 @@
 id,title,type,amount,date,category,account
 1,Office Rent Payment,Expense,2500.0,02-01-2025,Rent,Business Checking
 2,Client Invoice #1001,Income,3750.0,02-02-2025,Sales,Business Checking
-3,Office Supplies Purchase,Expense,187.50,02-03-2025,Office Supplies,Business Credit Card
+3,Office Supplies Purchase,Expense,187.5,02-03-2025,Office Supplies,Business Credit Card
 4,Employee Salary - John Doe,Expense,3000.0,02-05-2025,Payroll,Business Checking
 5,Utility Bill - Electricity,Expense,325.0,02-06-2025,Utilities,Business Checking
 6,Software Subscription - Accounting,Expense,49.99,02-07-2025,Software,Business Credit Card
@@ -40,7 +40,7 @@ id,title,type,amount,date,category,account
 39,Software Subscription - Design,Expense,19.99,03-13-2025,Software,Business Credit Card
 40,Professional Development Conference,Expense,899.0,03-14-2025,Training,Business Credit Card
 41,Client Invoice #1010,Income,5100.0,03-15-2025,Sales,Business Checking
-42,Office Supplies Purchase,Expense,132.50,03-16-2025,Office Supplies,Business Credit Card
+42,Office Supplies Purchase,Expense,132.5,03-16-2025,Office Supplies,Business Credit Card
 43,Employee Salary - John Doe,Expense,3000.0,03-17-2025,Payroll,Business Checking
 44,Internet Service Provider Bill,Expense,89.99,03-18-2025,Utilities,Business Checking
 45,Client Invoice #1011,Income,2700.0,03-19-2025,Sales,Business Checking
@@ -132,7 +132,7 @@ id,title,type,amount,date,category,account
 131,Employee Salary - John Doe,Expense,3000.0,06-13-2025,Payroll,Business Checking
 132,Client Invoice #1034,Income,3500.0,06-14-2025,Sales,Business Checking
 133,Vehicle Fuel,Expense,85.0,06-15-2025,Transportation,Business Credit Card
-134,Office Supplies Restock,Expense,198.50,06-16-2025,Office Supplies,Business Credit Card
+134,Office Supplies Restock,Expense,198.5,06-16-2025,Office Supplies,Business Credit Card
 135,Employee Salary - Jane Smith,Expense,2800.0,06-17-2025,Payroll,Business Checking
 136,Client Invoice #1035,Income,5100.0,06-18-2025,Sales,Business Checking
 137,Software Subscription - Design Tools,Expense,29.99,06-19-2025,Software,Business Credit Card
@@ -183,7 +183,7 @@ id,title,type,amount,date,category,account
 182,Client Invoice #1047,Income,5400.0,08-03-2025,Sales,Business Checking
 183,Office Furniture - Standing Desk Converter,Expense,199.99,08-04-2025,Equipment,Business Credit Card
 184,Employee Salary - Jane Smith,Expense,2800.0,08-05-2025,Payroll,Business Checking
-185,Software Subscription - Online Collaboration Tools,Expense,17.50,08-06-2025,Software,Business Credit Card
+185,Software Subscription - Online Collaboration Tools,Expense,17.5,08-06-2025,Software,Business Credit Card
 186,Client Invoice #1048,Income,3300.0,08-07-2025,Sales,Business Checking
 187,Employee Benefits - Retirement Plan Contribution,Expense,1000.0,08-08-2025,Benefits,Business Checking
 188,Utility Bill - Electricity,Expense,325.0,08-09-2025,Utilities,Business Checking
@@ -198,4 +198,5 @@ id,title,type,amount,date,category,account
 197,Client Invoice #1051,Income,5500.0,08-18-2025,Sales,Business Checking
 198,Software Subscription - Data Backup Service,Expense,11.99,08-19-2025,Software,Business Credit Card
 199,Professional Development Webinar,Expense,79.0,08-20-2025,Training,Business Credit Card
-200,Client Invoice #1052,Income,3450.0,08-21-2025,Sales,Business Checking201,Office Supplies,Income,9752.0,09-22-2025,General,General
+200,Client Invoice #1052,Income,3450.0,08-21-2025,Sales,Business Checking
+201,Test,Income,9756.0,07-05-2025,General,General
