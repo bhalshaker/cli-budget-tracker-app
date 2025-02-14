@@ -103,13 +103,14 @@ class DataController():
 
     def load_data_from_list_to_csv(data_list,list_type)->None:
         """Load data from a list into a CSV file."""
+        DataController.logger.info(f'Loading data from {list_type} to csv')
         fields=DataController.get_list_type_header(list_type)
         file_name=os.path.join(DataController.data_base_dir,f'{list_type}.csv')
         with open(file_name, 'w') as file:
             file.seek(0)
             writer = csv.DictWriter(file, fieldnames=fields)
             writer.writeheader()
-            if list_type==Files.ACCOUNTS.value or Files.CATEGORIES.value:
+            if list_type==(Files.ACCOUNTS.value or Files.CATEGORIES.value):
                 for item in data_list:
                     writer.writerow({'name':item})
             elif list_type==Files.ENTRIES.value:
@@ -121,16 +122,15 @@ class DataController():
     def delete_account(selected_account:str)->None:
         """Delete an account from the accounts list."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
-        upper_accounts_list=[item.upper() for item in accounts_list]
-        while selected_account.upper() in upper_accounts_list:
+        #upper_accounts_list=[item for item in accounts_list]
+        while selected_account.upper() in accounts_list:
             accounts_list.remove(selected_account)
         DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
 
     def delete_category(selected_category:str)->None:
         """Delete a category from the categories list."""
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
-        upper_categories_list=[item.upper() for item in categories_list]
-        while selected_category.upper() in upper_categories_list:
+        while selected_category in categories_list:
             categories_list.remove(selected_category)
         DataController.load_data_from_list_to_csv(categories_list,Files.CATEGORIES.value)
 
@@ -170,11 +170,32 @@ class DataController():
         accounts_modified_list=[renamed_account if account.upper()==orginal_account.upper() else account for account in accounts_list]
         DataController.load_data_from_list_to_csv(accounts_modified_list,Files.ACCOUNTS.value)
     
+    def rename_entries_account(orginal_account:str,renamed_account:str):
+        """Replace account in entries list."""
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        new_entries_list=[]
+        for entry in entries_list:
+            if entry.account==orginal_account:
+                entry.account=renamed_account
+            new_entries_list.append(entry)
+        DataController.load_data_from_list_to_csv(new_entries_list,Files.ENTRIES.value)
+
+    
     def rename_category(orginal_category:str,renamed_category:str):
         """Rename a category in the categories list."""
         categories_list=DataController.load_data_from_csv_to_list(Files.CATEGORIES.value)
         modified_categorties_list=[renamed_category if category.upper()==orginal_category.upper() else category for category in categories_list]
         DataController.load_data_from_list_to_csv(modified_categorties_list,Files.CATEGORIES.value)
+    
+    def rename_entries_category(orginal_category:str,renamed_category:str):
+        """Replace category in entries list."""
+        entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
+        new_entries_list=[]
+        for entry in entries_list:
+            if entry.category==orginal_category:
+                entry.category=renamed_category
+            new_entries_list.append(entry)
+        DataController.load_data_from_list_to_csv(new_entries_list,Files.ENTRIES.value)
             
     def search_entries_by_category(cat_search:str):
         """Search for entries by category."""

@@ -1,203 +1,201 @@
 id,title,type,amount,date,category,account
 1,Office Rent Payment,Expense,2500.0,02-01-2025,Rent,Business Checking
 2,Client Invoice #1001,Income,3750.0,02-02-2025,Sales,Business Checking
-3,Office Supplies Purchase,Expense,187.50,02-03-2025,Office Supplies,Business Credit Card
+3,Office Supplies Purchase,Expense,187.5,02-03-2025,Office Supplies,
 4,Employee Salary - John Doe,Expense,3000.0,02-05-2025,Payroll,Business Checking
-5,Utility Bill - Electricity,Expense,325.0,02-06-2025,Utilities,Business Checking
-6,Software Subscription - Accounting,Expense,49.99,02-07-2025,Software,Business Credit Card
+5,Utility Bill - Electricity,Expense,325.0,02-06-2025,,Business Checking
+6,Software Subscription - Accounting,Expense,49.99,02-07-2025,Software,
 7,Client Invoice #1002,Income,2800.0,02-08-2025,Sales,Business Checking
-8,Marketing Campaign - Social Media,Expense,500.0,02-09-2025,Marketing,Business Credit Card
+8,Marketing Campaign - Social Media,Expense,500.0,02-09-2025,Marketing,
 9,Office Cleaning Service,Expense,150.0,02-10-2025,Maintenance,Business Checking
 10,Employee Salary - Jane Smith,Expense,2800.0,02-12-2025,Payroll,Business Checking
-11,Internet Service Provider Bill,Expense,89.99,02-13-2025,Utilities,Business Checking
+11,Internet Service Provider Bill,Expense,89.99,02-13-2025,,Business Checking
 12,Client Invoice #1003,Income,4200.0,02-14-2025,Sales,Business Checking
-13,Office Equipment - Printer,Expense,399.99,02-15-2025,Equipment,Business Credit Card
+13,Office Equipment - Printer,Expense,399.99,02-15-2025,Equipment,
 14,Business Insurance Premium,Expense,750.0,02-16-2025,Insurance,Business Checking
-15,Employee Training Workshop,Expense,1200.0,02-17-2025,Training,Business Credit Card
+15,Employee Training Workshop,Expense,1200.0,02-17-2025,Training,
 16,Client Invoice #1004,Income,3100.0,02-18-2025,Sales,Business Checking
-17,Vehicle Fuel,Expense,75.0,02-19-2025,Transportation,Business Credit Card
-18,Office Snacks and Beverages,Expense,100.0,02-20-2025,Office Supplies,Business Credit Card
+17,Vehicle Fuel,Expense,75.0,02-19-2025,Transportation,
+18,Office Snacks and Beverages,Expense,100.0,02-20-2025,Office Supplies,
 19,Employee Salary - John Doe,Expense,3000.0,02-21-2025,Payroll,Business Checking
 20,Professional Services - Legal,Expense,500.0,02-22-2025,Legal,Business Checking
 21,Client Invoice #1005,Income,5500.0,02-23-2025,Sales,Business Checking
-22,Office Furniture - Chairs,Expense,799.99,02-24-2025,Equipment,Business Credit Card
+22,Office Furniture - Chairs,Expense,799.99,02-24-2025,Equipment,
 23,Employee Salary - Jane Smith,Expense,2800.0,02-25-2025,Payroll,Business Checking
-24,Utility Bill - Water,Expense,75.0,02-26-2025,Utilities,Business Checking
+24,Utility Bill - Water,Expense,75.0,02-26-2025,,Business Checking
 25,Client Invoice #1006,Income,2950.0,02-27-2025,Sales,Business Checking
-26,Office Supplies Restock,Expense,225.0,02-28-2025,Office Supplies,Business Credit Card
-27,Software Subscription - Project Management,Expense,29.99,03-01-2025,Software,Business Credit Card
+26,Office Supplies Restock,Expense,225.0,02-28-2025,Office Supplies,
+27,Software Subscription - Project Management,Expense,29.99,03-01-2025,Software,
 28,Employee Benefits - Health Insurance,Expense,1500.0,03-02-2025,Benefits,Business Checking
 29,Client Invoice #1007,Income,4800.0,03-03-2025,Sales,Business Checking
-30,Marketing Materials - Brochures,Expense,350.0,03-04-2025,Marketing,Business Credit Card
+30,Marketing Materials - Brochures,Expense,350.0,03-04-2025,Marketing,
 31,Office Rent Payment,Expense,2500.0,03-05-2025,Rent,Business Checking
 32,Employee Salary - John Doe,Expense,3000.0,03-06-2025,Payroll,Business Checking
 33,Client Invoice #1008,Income,3200.0,03-07-2025,Sales,Business Checking
-34,Vehicle Maintenance,Expense,250.0,03-08-2025,Transportation,Business Credit Card
-35,Utility Bill - Electricity,Expense,310.0,03-09-2025,Utilities,Business Checking
+34,Vehicle Maintenance,Expense,250.0,03-08-2025,Transportation,
+35,Utility Bill - Electricity,Expense,310.0,03-09-2025,,Business Checking
 36,Employee Salary - Jane Smith,Expense,2800.0,03-10-2025,Payroll,Business Checking
 37,Client Invoice #1009,Income,3900.0,03-11-2025,Sales,Business Checking
 38,Office Cleaning Service,Expense,150.0,03-12-2025,Maintenance,Business Checking
-39,Software Subscription - Design,Expense,19.99,03-13-2025,Software,Business Credit Card
-40,Professional Development Conference,Expense,899.0,03-14-2025,Training,Business Credit Card
+39,Software Subscription - Design,Expense,19.99,03-13-2025,Software,
+40,Professional Development Conference,Expense,899.0,03-14-2025,Training,
 41,Client Invoice #1010,Income,5100.0,03-15-2025,Sales,Business Checking
-42,Office Supplies Purchase,Expense,132.50,03-16-2025,Office Supplies,Business Credit Card
+42,Office Supplies Purchase,Expense,132.5,03-16-2025,Office Supplies,
 43,Employee Salary - John Doe,Expense,3000.0,03-17-2025,Payroll,Business Checking
-44,Internet Service Provider Bill,Expense,89.99,03-18-2025,Utilities,Business Checking
+44,Internet Service Provider Bill,Expense,89.99,03-18-2025,,Business Checking
 45,Client Invoice #1011,Income,2700.0,03-19-2025,Sales,Business Checking
-46,Marketing Campaign - Email,Expense,300.0,03-20-2025,Marketing,Business Credit Card
+46,Marketing Campaign - Email,Expense,300.0,03-20-2025,Marketing,
 47,Employee Salary - Jane Smith,Expense,2800.0,03-21-2025,Payroll,Business Checking
-48,Office Equipment - Laptop,Expense,1299.99,03-22-2025,Equipment,Business Credit Card
+48,Office Equipment - Laptop,Expense,1299.99,03-22-2025,Equipment,
 49,Client Invoice #1012,Income,4400.0,03-23-2025,Sales,Business Checking
-50,Business Travel - Flight Tickets,Expense,550.0,03-24-2025,Travel,Business Credit Card
-51,Utility Bill - Gas,Expense,95.0,03-25-2025,Utilities,Business Checking
+50,Business Travel - Flight Tickets,Expense,550.0,03-24-2025,Travel,
+51,Utility Bill - Gas,Expense,95.0,03-25-2025,,Business Checking
 52,Client Invoice #1013,Income,3600.0,03-26-2025,Sales,Business Checking
-53,Office Snacks and Beverages,Expense,85.0,03-27-2025,Office Supplies,Business Credit Card
+53,Office Snacks and Beverages,Expense,85.0,03-27-2025,Office Supplies,
 54,Employee Salary - John Doe,Expense,3000.0,03-28-2025,Payroll,Business Checking
 55,Professional Services - Accounting,Expense,400.0,03-29-2025,Accounting,Business Checking
 56,Client Invoice #1014,Income,4900.0,03-30-2025,Sales,Business Checking
-57,Office Furniture - Desk,Expense,599.99,03-31-2025,Equipment,Business Credit Card
+57,Office Furniture - Desk,Expense,599.99,03-31-2025,Equipment,
 58,Employee Salary - Jane Smith,Expense,2800.0,04-01-2025,Payroll,Business Checking
 59,Office Rent Payment,Expense,2500.0,04-02-2025,Rent,Business Checking
 60,Client Invoice #1015,Income,3300.0,04-03-2025,Sales,Business Checking
-61,Software Subscription - CRM,Expense,79.99,04-04-2025,Software,Business Credit Card
+61,Software Subscription - CRM,Expense,79.99,04-04-2025,Software,
 62,Employee Benefits - 401k Contribution,Expense,1000.0,04-05-2025,Benefits,Business Checking
 63,Client Invoice #1016,Income,5200.0,04-06-2025,Sales,Business Checking
-64,Marketing Materials - Business Cards,Expense,150.0,04-07-2025,Marketing,Business Credit Card
-65,Utility Bill - Electricity,Expense,335.0,04-08-2025,Utilities,Business Checking
+64,Marketing Materials - Business Cards,Expense,150.0,04-07-2025,Marketing,
+65,Utility Bill - Electricity,Expense,335.0,04-08-2025,,Business Checking
 66,Employee Salary - John Doe,Expense,3000.0,04-09-2025,Payroll,Business Checking
 67,Client Invoice #1017,Income,2850.0,04-10-2025,Sales,Business Checking
 68,Office Cleaning Service,Expense,150.0,04-11-2025,Maintenance,Business Checking
-69,Vehicle Fuel,Expense,80.0,04-12-2025,Transportation,Business Credit Card
+69,Vehicle Fuel,Expense,80.0,04-12-2025,Transportation,
 70,Employee Salary - Jane Smith,Expense,2800.0,04-13-2025,Payroll,Business Checking
 71,Client Invoice #1018,Income,4100.0,04-14-2025,Sales,Business Checking
-72,Office Supplies Restock,Expense,210.0,04-15-2025,Office Supplies,Business Credit Card
-73,Software Subscription - Antivirus,Expense,39.99,04-16-2025,Software,Business Credit Card
-74,Employee Training Seminar,Expense,750.0,04-17-2025,Training,Business Credit Card
+72,Office Supplies Restock,Expense,210.0,04-15-2025,Office Supplies,
+73,Software Subscription - Antivirus,Expense,39.99,04-16-2025,Software,
+74,Employee Training Seminar,Expense,750.0,04-17-2025,Training,
 75,Client Invoice #1019,Income,3800.0,04-18-2025,Sales,Business Checking
-76,Office Equipment - Monitor,Expense,349.99,04-19-2025,Equipment,Business Credit Card
+76,Office Equipment - Monitor,Expense,349.99,04-19-2025,Equipment,
 77,Employee Salary - John Doe,Expense,3000.0,04-20-2025,Payroll,Business Checking
-78,Internet Service Provider Bill,Expense,89.99,04-21-2025,Utilities,Business Checking
+78,Internet Service Provider Bill,Expense,89.99,04-21-2025,,Business Checking
 79,Client Invoice #1020,Income,5700.0,04-22-2025,Sales,Business Checking
-80,Marketing Campaign - Google Ads,Expense,450.0,04-23-2025,Marketing,Business Credit Card
+80,Marketing Campaign - Google Ads,Expense,450.0,04-23-2025,Marketing,
 81,Employee Salary - Jane Smith,Expense,2800.0,04-24-2025,Payroll,Business Checking
 82,Business Insurance Premium,Expense,750.0,04-25-2025,Insurance,Business Checking
 83,Client Invoice #1021,Income,3050.0,04-26-2025,Sales,Business Checking
-84,Office Snacks and Beverages,Expense,95.0,04-27-2025,Office Supplies,Business Credit Card
-85,Utility Bill - Water,Expense,70.0,04-28-2025,Utilities,Business Checking
+84,Office Snacks and Beverages,Expense,95.0,04-27-2025,Office Supplies,
+85,Utility Bill - Water,Expense,70.0,04-28-2025,,Business Checking
 86,Client Invoice #1022,Income,4300.0,04-29-2025,Sales,Business Checking
 87,Professional Services - Legal,Expense,600.0,04-30-2025,Legal,Business Checking
 88,Employee Salary - John Doe,Expense,3000.0,05-01-2025,Payroll,Business Checking
 89,Office Rent Payment,Expense,2500.0,05-02-2025,Rent,Business Checking
 90,Client Invoice #1023,Income,5400.0,05-03-2025,Sales,Business Checking
-91,Office Furniture - Filing Cabinet,Expense,299.99,05-04-2025,Equipment,Business Credit Card
+91,Office Furniture - Filing Cabinet,Expense,299.99,05-04-2025,Equipment,
 92,Employee Salary - Jane Smith,Expense,2800.0,05-05-2025,Payroll,Business Checking
-93,Software Subscription - Productivity Suite,Expense,12.99,05-06-2025,Software,Business Credit Card
+93,Software Subscription - Productivity Suite,Expense,12.99,05-06-2025,Software,
 94,Client Invoice #1024,Income,2900.0,05-07-2025,Sales,Business Checking
 95,Employee Benefits - Health Insurance,Expense,1500.0,05-08-2025,Benefits,Business Checking
-96,Utility Bill - Electricity,Expense,315.0,05-09-2025,Utilities,Business Checking
+96,Utility Bill - Electricity,Expense,315.0,05-09-2025,,Business Checking
 97,Client Invoice #1025,Income,4700.0,05-10-2025,Sales,Business Checking
-98,Marketing Materials - Flyers,Expense,200.0,05-11-2025,Marketing,Business Credit Card
+98,Marketing Materials - Flyers,Expense,200.0,05-11-2025,Marketing,
 99,Office Cleaning Service,Expense,150.0,05-12-2025,Maintenance,Business Checking
 100,Employee Salary - John Doe,Expense,3000.0,05-13-2025,Payroll,Business Checking
 101,Client Invoice #1026,Income,3400.0,05-14-2025,Sales,Business Checking
-102,Vehicle Maintenance,Expense,175.0,05-15-2025,Transportation,Business Credit Card
-103,Office Supplies Purchase,Expense,156.75,05-16-2025,Office Supplies,Business Credit Card
+102,Vehicle Maintenance,Expense,175.0,05-15-2025,Transportation,
+103,Office Supplies Purchase,Expense,156.75,05-16-2025,Office Supplies,
 104,Employee Salary - Jane Smith,Expense,2800.0,05-17-2025,Payroll,Business Checking
 105,Client Invoice #1027,Income,5000.0,05-18-2025,Sales,Business Checking
-106,Software Subscription - Cloud Storage,Expense,9.99,05-19-2025,Software,Business Credit Card
-107,Professional Development Workshop,Expense,499.0,05-20-2025,Training,Business Credit Card
+106,Software Subscription - Cloud Storage,Expense,9.99,05-19-2025,Software,
+107,Professional Development Workshop,Expense,499.0,05-20-2025,Training,
 108,Client Invoice #1028,Income,3150.0,05-21-2025,Sales,Business Checking
-109,Office Equipment - Projector,Expense,699.99,05-22-2025,Equipment,Business Credit Card
+109,Office Equipment - Projector,Expense,699.99,05-22-2025,Equipment,
 110,Employee Salary - John Doe,Expense,3000.0,05-23-2025,Payroll,Business Checking
-111,Internet Service Provider Bill,Expense,89.99,05-24-2025,Utilities,Business Checking
+111,Internet Service Provider Bill,Expense,89.99,05-24-2025,,Business Checking
 112,Client Invoice #1029,Income,4600.0,05-25-2025,Sales,Business Checking
-113,Marketing Campaign - LinkedIn Ads,Expense,350.0,05-26-2025,Marketing,Business Credit Card
+113,Marketing Campaign - LinkedIn Ads,Expense,350.0,05-26-2025,Marketing,
 114,Employee Salary - Jane Smith,Expense,2800.0,05-27-2025,Payroll,Business Checking
-115,Utility Bill - Gas,Expense,85.0,05-28-2025,Utilities,Business Checking
+115,Utility Bill - Gas,Expense,85.0,05-28-2025,,Business Checking
 116,Client Invoice #1030,Income,3700.0,05-29-2025,Sales,Business Checking
-117,Office Snacks and Beverages,Expense,110.0,05-30-2025,Office Supplies,Business Credit Card
+117,Office Snacks and Beverages,Expense,110.0,05-30-2025,Office Supplies,
 118,Professional Services - Consulting,Expense,800.0,05-31-2025,Consulting,Business Checking
 119,Employee Salary - John Doe,Expense,3000.0,06-01-2025,Payroll,Business Checking
 120,Office Rent Payment,Expense,2500.0,06-02-2025,Rent,Business Checking
 121,Client Invoice #1031,Income,5300.0,06-03-2025,Sales,Business Checking
-122,Office Furniture - Bookshelf,Expense,249.99,06-04-2025,Equipment,Business Credit Card
+122,Office Furniture - Bookshelf,Expense,249.99,06-04-2025,Equipment,
 123,Employee Salary - Jane Smith,Expense,2800.0,06-05-2025,Payroll,Business Checking
-124,Software Subscription - Video Conferencing,Expense,14.99,06-06-2025,Software,Business Credit Card
+124,Software Subscription - Video Conferencing,Expense,14.99,06-06-2025,Software,
 125,Client Invoice #1032,Income,3000.0,06-07-2025,Sales,Business Checking
 126,Employee Benefits - 401k Contribution,Expense,1000.0,06-08-2025,Benefits,Business Checking
-127,Utility Bill - Electricity,Expense,330.0,06-09-2025,Utilities,Business Checking
+127,Utility Bill - Electricity,Expense,330.0,06-09-2025,,Business Checking
 128,Client Invoice #1033,Income,4800.0,06-10-2025,Sales,Business Checking
-129,Marketing Materials - Banners,Expense,275.0,06-11-2025,Marketing,Business Credit Card
+129,Marketing Materials - Banners,Expense,275.0,06-11-2025,Marketing,
 130,Office Cleaning Service,Expense,150.0,06-12-2025,Maintenance,Business Checking
 131,Employee Salary - John Doe,Expense,3000.0,06-13-2025,Payroll,Business Checking
 132,Client Invoice #1034,Income,3500.0,06-14-2025,Sales,Business Checking
-133,Vehicle Fuel,Expense,85.0,06-15-2025,Transportation,Business Credit Card
-134,Office Supplies Restock,Expense,198.50,06-16-2025,Office Supplies,Business Credit Card
+133,Vehicle Fuel,Expense,85.0,06-15-2025,Transportation,
+134,Office Supplies Restock,Expense,198.5,06-16-2025,Office Supplies,
 135,Employee Salary - Jane Smith,Expense,2800.0,06-17-2025,Payroll,Business Checking
 136,Client Invoice #1035,Income,5100.0,06-18-2025,Sales,Business Checking
-137,Software Subscription - Design Tools,Expense,29.99,06-19-2025,Software,Business Credit Card
-138,Employee Training,Expense,500.0,06-20-2025,Training,Business Credit Card
+137,Software Subscription - Design Tools,Expense,29.99,06-19-2025,Software,
+138,Employee Training,Expense,500.0,06-20-2025,Training,
 139,Client Invoice #1036,Income,4200.0,06-21-2025,Sales,Business Checking
-140,Office Equipment - Headset,Expense,149.99,06-22-2025,Equipment,Business Credit Card
+140,Office Equipment - Headset,Expense,149.99,06-22-2025,Equipment,
 141,Employee Salary - John Doe,Expense,3000.0,06-23-2025,Payroll,Business Checking
-142,Internet Service Provider Bill,Expense,89.99,06-24-2025,Utilities,Business Checking
+142,Internet Service Provider Bill,Expense,89.99,06-24-2025,,Business Checking
 143,Client Invoice #1037,Income,3900.0,06-25-2025,Sales,Business Checking
-144,Marketing Campaign - Local Print Ads,Expense,400.0,06-26-2025,Marketing,Business Credit Card
+144,Marketing Campaign - Local Print Ads,Expense,400.0,06-26-2025,Marketing,
 145,Employee Salary - Jane Smith,Expense,2800.0,06-27-2025,Payroll,Business Checking
-146,Utility Bill - Water,Expense,72.0,06-28-2025,Utilities,Business Checking
+146,Utility Bill - Water,Expense,72.0,06-28-2025,,Business Checking
 147,Client Invoice #1038,Income,4500.0,06-29-2025,Sales,Business Checking
-148,Office Snacks and Beverages,Expense,92.0,06-30-2025,Office Supplies,Business Credit Card
+148,Office Snacks and Beverages,Expense,92.0,06-30-2025,Office Supplies,
 149,Employee Salary - John Doe,Expense,3000.0,07-01-2025,Payroll,Business Checking
 150,Office Rent Payment,Expense,2500.0,07-02-2025,Rent,Business Checking
 151,Client Invoice #1039,Income,5200.0,07-03-2025,Sales,Business Checking
-152,Office Furniture - Ergonomic Keyboard,Expense,129.99,07-04-2025,Equipment,Business Credit Card
+152,Office Furniture - Ergonomic Keyboard,Expense,129.99,07-04-2025,Equipment,
 153,Employee Salary - Jane Smith,Expense,2800.0,07-05-2025,Payroll,Business Checking
-154,Software Subscription - Security Software,Expense,35.0,07-06-2025,Software,Business Credit Card
+154,Software Subscription - Security Software,Expense,35.0,07-06-2025,Software,
 155,Client Invoice #1040,Income,3100.0,07-07-2025,Sales,Business Checking
 156,Employee Benefits - Health Insurance,Expense,1500.0,07-08-2025,Benefits,Business Checking
-157,Utility Bill - Electricity,Expense,320.0,07-09-2025,Utilities,Business Checking
+157,Utility Bill - Electricity,Expense,320.0,07-09-2025,,Business Checking
 158,Client Invoice #1041,Income,4900.0,07-10-2025,Sales,Business Checking
-159,Marketing Materials - Postcards,Expense,180.0,07-11-2025,Marketing,Business Credit Card
+159,Marketing Materials - Postcards,Expense,180.0,07-11-2025,Marketing,
 160,Office Cleaning Service,Expense,150.0,07-12-2025,Maintenance,Business Checking
 161,Employee Salary - John Doe,Expense,3000.0,07-13-2025,Payroll,Business Checking
 162,Client Invoice #1042,Income,3600.0,07-14-2025,Sales,Business Checking
-163,Vehicle Maintenance,Expense,210.0,07-15-2025,Transportation,Business Credit Card
-164,Office Supplies Purchase,Expense,172.0,07-16-2025,Office Supplies,Business Credit Card
+163,Vehicle Maintenance,Expense,210.0,07-15-2025,Transportation,
+164,Office Supplies Purchase,Expense,172.0,07-16-2025,Office Supplies,
 165,Employee Salary - Jane Smith,Expense,2800.0,07-17-2025,Payroll,Business Checking
 166,Client Invoice #1043,Income,5300.0,07-18-2025,Sales,Business Checking
-167,Software Subscription - Graphic Design,Expense,24.99,07-19-2025,Software,Business Credit Card
-168,Professional Development Books,Expense,65.0,07-20-2025,Training,Business Credit Card
+167,Software Subscription - Graphic Design,Expense,24.99,07-19-2025,Software,
+168,Professional Development Books,Expense,65.0,07-20-2025,Training,
 169,Client Invoice #1044,Income,3250.0,07-21-2025,Sales,Business Checking
-170,Office Equipment - External Hard Drive,Expense,89.99,07-22-2025,Equipment,Business Credit Card
+170,Office Equipment - External Hard Drive,Expense,89.99,07-22-2025,Equipment,
 171,Employee Salary - John Doe,Expense,3000.0,07-23-2025,Payroll,Business Checking
-172,Internet Service Provider Bill,Expense,89.99,07-24-2025,Utilities,Business Checking
+172,Internet Service Provider Bill,Expense,89.99,07-24-2025,,Business Checking
 173,Client Invoice #1045,Income,4800.0,07-25-2025,Sales,Business Checking
-174,Marketing Campaign - Industry Event Sponsorship,Expense,600.0,07-26-2025,Marketing,Business Credit Card
+174,Marketing Campaign - Industry Event Sponsorship,Expense,600.0,07-26-2025,Marketing,
 175,Employee Salary - Jane Smith,Expense,2800.0,07-27-2025,Payroll,Business Checking
-176,Utility Bill - Gas,Expense,78.0,07-28-2025,Utilities,Business Checking
+176,Utility Bill - Gas,Expense,78.0,07-28-2025,,Business Checking
 177,Client Invoice #1046,Income,3900.0,07-29-2025,Sales,Business Checking
-178,Office Snacks and Beverages,Expense,105.0,07-30-2025,Office Supplies,Business Credit Card
+178,Office Snacks and Beverages,Expense,105.0,07-30-2025,Office Supplies,
 179,Professional Services - Tax Preparation,Expense,700.0,07-31-2025,Accounting,Business Checking
 180,Employee Salary - John Doe,Expense,3000.0,08-01-2025,Payroll,Business Checking
 181,Office Rent Payment,Expense,2500.0,08-02-2025,Rent,Business Checking
 182,Client Invoice #1047,Income,5400.0,08-03-2025,Sales,Business Checking
-183,Office Furniture - Standing Desk Converter,Expense,199.99,08-04-2025,Equipment,Business Credit Card
+183,Office Furniture - Standing Desk Converter,Expense,199.99,08-04-2025,Equipment,
 184,Employee Salary - Jane Smith,Expense,2800.0,08-05-2025,Payroll,Business Checking
-185,Software Subscription - Online Collaboration Tools,Expense,17.50,08-06-2025,Software,Business Credit Card
+185,Software Subscription - Online Collaboration Tools,Expense,17.5,08-06-2025,Software,
 186,Client Invoice #1048,Income,3300.0,08-07-2025,Sales,Business Checking
 187,Employee Benefits - Retirement Plan Contribution,Expense,1000.0,08-08-2025,Benefits,Business Checking
-188,Utility Bill - Electricity,Expense,325.0,08-09-2025,Utilities,Business Checking
+188,Utility Bill - Electricity,Expense,325.0,08-09-2025,,Business Checking
 189,Client Invoice #1049,Income,5100.0,08-10-2025,Sales,Business Checking
-190,Marketing Materials - Thank You Cards,Expense,160.0,08-11-2025,Marketing,Business Credit Card
+190,Marketing Materials - Thank You Cards,Expense,160.0,08-11-2025,Marketing,
 191,Office Cleaning Service,Expense,150.0,08-12-2025,Maintenance,Business Checking
 192,Employee Salary - John Doe,Expense,3000.0,08-13-2025,Payroll,Business Checking
 193,Client Invoice #1050,Income,3700.0,08-14-2025,Sales,Business Checking
-194,Vehicle Maintenance,Expense,190.0,08-15-2025,Transportation,Business Credit Card
-195,Office Supplies Purchase,Expense,165.0,08-16-2025,Office Supplies,Business Credit Card
+194,Vehicle Maintenance,Expense,190.0,08-15-2025,Transportation,
+195,Office Supplies Purchase,Expense,165.0,08-16-2025,Office Supplies,
 196,Employee Salary - Jane Smith,Expense,2800.0,08-17-2025,Payroll,Business Checking
 197,Client Invoice #1051,Income,5500.0,08-18-2025,Sales,Business Checking
-198,Software Subscription - Data Backup Service,Expense,11.99,08-19-2025,Software,Business Credit Card
-199,Professional Development Webinar,Expense,79.0,08-20-2025,Training,Business Credit Card
+198,Software Subscription - Data Backup Service,Expense,11.99,08-19-2025,Software,
+199,Professional Development Webinar,Expense,79.0,08-20-2025,Training,
 200,Client Invoice #1052,Income,3450.0,08-21-2025,Sales,Business Checking
-201,Office Supplies,Expense,975.0,09-06-2026,General,Business Credit Card
-202,Test,Income,9874.0,09-07-2027,General,General

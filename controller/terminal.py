@@ -219,11 +219,11 @@ class TerminalController():
             case 'A Specific Account':
                 selected_account=TerminalInputController.select_an_account_prompt('Select the account you want to generate the report for')
                 entries_list=DataController.match_entries_by_account(selected_account["account"])
-                report_for=selected_account["account"]
+                report_for=f'entries under {selected_account["account"]} account'
             case 'A Specific Category':
                 selected_category=TerminalInputController.select_a_category_prompt('Select the category you want to generate the report for')
                 entries_list=DataController.match_entries_by_category(selected_category["category"])
-                report_for=selected_category["category"]
+                report_for=f'entries under {selected_category["category"]} category'
         filter_by_date=TerminalInputController.filter_report_by_date_prompt()
         if filter_by_date["filter_report"]:
             filter_date_method=TerminalInputController.generate_reports_by_date_range_prompt()
@@ -245,7 +245,7 @@ class TerminalController():
                     date_print=f'{year["year"]}'
         else:
             report_entries_list=entries_list
-        print(f'\nReport for {report_for} ({date_print if date_print else ""})')
+        print(f'\nFinancial Report for {report_for} ({date_print if date_print else ""})')
         balance=TerminalController.process_entry_list_balance(report_entries_list)
         TerminalController.print_financial_report(balance)
 
@@ -323,12 +323,8 @@ class TerminalController():
         else:
             print(f'No entries under {selected_account["account"]} account')
         DataController.delete_account(selected_account["account"])
-        for item in matched_entries:
-            DataController.entries[item].account=None
+        DataController.rename_entries_account(selected_account["account"],None)
         print(f'Entries under {selected_account["account"]} successfully nulled account name')
-        if len(matched_entries)>0:
-            DataController.load_data_from_list_to_csv('entries')
-        DataController.load_data_from_list_to_csv('accounts')
         TerminalController.any_key_to_continue()
 
     def delete_a_category():
@@ -345,12 +341,8 @@ class TerminalController():
         else:
             print(f'No entries under {selected_category["category"]} category')
         DataController.delete_category(selected_category["category"])
-        for item in matched_entries:
-            DataController.entries[item].account=None
+        DataController.rename_entries_category(selected_category["category"],None)
         print(f'Entries under {selected_category["category"]} successfully nulled category name')
-        if len(matched_entries)>0:
-            DataController.load_data_from_list_to_csv('entries')
-        DataController.load_data_from_list_to_csv('categories')
         TerminalController.any_key_to_continue()
 
     def manage_accounts_and_categories():
@@ -363,21 +355,21 @@ class TerminalController():
         match choice["choice"]:
             case "Add a New Account or Category":
                 account_or_category=TerminalInputController.choose_an_account_or_a_category_prompt('Select which list you want to append')
-                match account_or_category:
+                match account_or_category['account_or_category']:
                     case 'account':
                         TerminalController.add_a_new_account()
                     case 'category':
                         TerminalController.add_a_new_category()
             case "Edit an Existing Account or Category":
                 account_or_category=TerminalInputController.choose_an_account_or_a_category_prompt('Select which list you want to edit')
-                match account_or_category:
+                match account_or_category['account_or_category']:
                     case 'account':
                         TerminalController.edit_an_account()
                     case 'category':
                         TerminalController.edit_a_category()
             case "Delete an Account or Category":
-                account_or_category=TerminalInputController.choose_an_account_or_a_category_prompt('Select which list you want to edit')
-                match account_or_category:
+                account_or_category=TerminalInputController.choose_an_account_or_a_category_prompt('Select which list you want to delete')
+                match account_or_category['account_or_category']:
                     case 'account':
                         TerminalController.delete_an_account()
                     case 'category':
