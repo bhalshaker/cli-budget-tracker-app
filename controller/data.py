@@ -238,7 +238,7 @@ class DataController():
     def match_entries_by_category(cat_search:str):
         """Match entries by category."""
         entries_list=DataController.load_data_from_csv_to_list(Files.ENTRIES.value)
-        return list(filter(lambda entry:entry.category.upper()==cat_search.upper(),entries_list))
+        return list(filter(lambda entry:entry.category==cat_search,entries_list))
     
     def does_account_exist(account:str)->bool:
         """Check if an account exists."""
@@ -291,8 +291,12 @@ class DataController():
         """Convert an end month to a date string."""
         return f'{month}-{"31" if month=="03" or month=="12" else "30"}-{year}'
     
-    def quarters_to_dates(quarter,year):
+    def quarters_to_dates(selected_quarter,year):
         """Convert a quarter to start and end dates."""
-        start_date=DataController.start_month_to_date(quarter['start_month',year])
-        end_date=DataController.start_month_to_date(quarter['end_month',year])
+        DataController.logger.info(f'Selected Quarter {selected_quarter}')
+        quarters_list=DataController.return_quarters()
+        quarter=quarters_list[selected_quarter]
+        DataController.logger.info(f'Selected Quarter info {quarter}')
+        start_date=DataController.start_month_to_date(quarter['start_month'],year)
+        end_date=DataController.end_month_to_date(quarter['end_month'],year)
         return DataController.filter_entries_by_date_range(start_date,end_date)

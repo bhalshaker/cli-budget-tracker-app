@@ -5,11 +5,14 @@ import sys
 from controller.data import DataController,Files,Month
 import pyfiglet
 from controller.terminal_input import TerminalInputController
+import logging
 
 class TerminalController():
     """
     This class contains methods for the terminal interface.
     """
+
+    logger = logging.getLogger(__name__)
 
     def print_welcome_screen():
         """
@@ -195,7 +198,7 @@ class TerminalController():
                 TerminalController.print_entries(entries_to_print)
             case 'within a certain category':
                 selected_category=TerminalInputController.select_a_category_prompt('Select the category that you want to search entries by')
-                entries_to_print=DataController.match_entries_by_account(selected_category["category"])
+                entries_to_print=DataController.match_entries_by_category(selected_category["category"])
                 print(f'Seatch Results for entries within "{selected_category["category"]}" category:')
                 TerminalController.print_entries(entries_to_print)
             case'within a specific account':

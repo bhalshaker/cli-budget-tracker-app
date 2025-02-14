@@ -5,8 +5,7 @@ import logging
 
 class TerminalInputController():
     """Controller class for handling terminal input operations."""
-    def __init__(self):
-        self.logger = logging.getLogger(__name__)
+    logger = logging.getLogger(__name__)
 
     def input_prompt(questions_list,theme=None):
         """
@@ -19,6 +18,7 @@ class TerminalInputController():
         Returns:
             dict: User's responses to the questions.
         """
+        DataController.logger.info(f'Input question is {questions_list}')
         if theme:
             return prompt(questions_list, theme=theme)
         else:
@@ -391,7 +391,7 @@ class TerminalInputController():
         quarters_list=[quarter for quarter,period in quarters.items()]
         quarters_range=[
             List('quarter',message='Select the quarter you want to generate the report for',choices=quarters_list,default=quarters_list[0]),
-            TerminalInputController.year_input,
+            Text('year',message='Please enter the year you want to generate the report for',validate=TerminalValidationController.validate_year),
         ]
         return TerminalInputController.input_prompt(quarters_range)
     
