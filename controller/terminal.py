@@ -257,6 +257,7 @@ class TerminalController():
         """
         account=TerminalInputController.add_a_new_account_prompt()
         DataController.add_a_new_account(account["account"])
+        TerminalController.any_key_to_continue()
         
     def add_a_new_category():
         """
@@ -264,7 +265,7 @@ class TerminalController():
         """
         category=TerminalInputController.add_a_new_category_prompt()
         DataController.add_a_new_account(category["category"])
-
+        TerminalController.any_key_to_continue()
 
     def edit_an_account():
         """

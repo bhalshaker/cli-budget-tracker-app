@@ -130,8 +130,7 @@ class DataController():
     def delete_account(selected_account:str)->None:
         """Delete an account from the accounts list."""
         accounts_list=DataController.load_data_from_csv_to_list(Files.ACCOUNTS.value)
-        #upper_accounts_list=[item for item in accounts_list]
-        while selected_account.upper() in accounts_list:
+        while selected_account in accounts_list:
             accounts_list.remove(selected_account)
         DataController.load_data_from_list_to_csv(accounts_list,Files.ACCOUNTS.value)
 
