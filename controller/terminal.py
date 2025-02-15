@@ -264,7 +264,7 @@ class TerminalController():
         This method adds a new category.
         """
         category=TerminalInputController.add_a_new_category_prompt()
-        DataController.add_a_new_account(category["category"])
+        DataController.add_a_new_category(category["category"])
         TerminalController.any_key_to_continue()
 
     def edit_an_account():
